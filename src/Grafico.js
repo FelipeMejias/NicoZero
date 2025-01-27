@@ -4,11 +4,11 @@ import { intervaloPreparos } from "./back/graficos/intervPrep"
 import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
-
+import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck } from "lucide-react";
 export function Grafico({id,mini,tipo,nome,dados,cont}){
     const [lista,setLista]=useState([])
     const [tags,setTags]=useState([])
-
+    const [alterando,setAlterando]=useState(false)
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
     const [zoom,setZoom]=useState(JSON.parse(localStorage.getItem("zoom"))||5)
     function scrollToEnd() {
@@ -34,7 +34,7 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
     return(mini?
         <Quadrinho id={id}>
                 {lista.map((tam,index)=><Holder>
-                    <Barrinha  cor={tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*4}>
+                    <Barrinha  cor={index==lista.length-1?'#b5b5b5':tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*4}>
                         <Tag>{tags[index]?.slice(0,3)||''}</Tag>
                     </Barrinha>
                     {tam==88||tam==99?<></>:<p>{tam}</p>}
@@ -42,33 +42,41 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
                 </Holder>)}
             </Quadrinho>:
         <Tela>
-            <Cab>
-            <Conf>
-            <h5>SONO</h5>
-            <Control>
-                <Action onClick={()=>{if(sono>0)setSono(sono-1)}}>
-                    -
-                </Action>
-                <p>{sono}</p>
-                <Action onClick={()=>{if(sono<12)setSono(sono+1)}}>
-                    +
-                </Action>
-            </Control>
-            </Conf>
-            <h1>{nome}</h1>
-            <Conf>
-            <h5>ZOOM</h5>
-            <Control>
-                <Action onClick={()=>{if(zoom>1)setZoom(zoom-1)}}>
-                    -
-                </Action>
-                <p>{zoom}</p>
-                <Action onClick={()=>{if(zoom<10)setZoom(zoom+1)}}>
-                    +
-                </Action>
-            </Control>
-            </Conf>
+            {alterando?
+            <Cab style={{maxWidth:'300px'}}>
+                <Conf>
+                    <h5>SONO</h5>
+                    <Control>
+                        <Action onClick={()=>{if(sono>0)setSono(sono-1)}}>
+                            -
+                        </Action>
+                        <p>{sono}</p>
+                        <Action onClick={()=>{if(sono<12)setSono(sono+1)}}>
+                            +
+                        </Action>
+                    </Control>
+                </Conf>
+                <LucideMonitorCheck onClick={()=>setAlterando(false)} style={{cursor:'pointer'}} size={24} color="green" />
+                <Conf>
+                    <h5>ZOOM</h5>
+                    <Control>
+                        <Action onClick={()=>{if(zoom>1)setZoom(zoom-1)}}>
+                            -
+                        </Action>
+                        <p>{zoom}</p>
+                        <Action onClick={()=>{if(zoom<10)setZoom(zoom+1)}}>
+                            +
+                        </Action>
+                    </Control>
+                </Conf>
             </Cab>
+        :
+            <Cab>
+                <h1>{nome}</h1>
+                <LucideSettings2 onClick={()=>setAlterando(true)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
+            </Cab>
+}
+            
             <Quadro id={id}>
                 {lista.map((tam,index)=><Holder>
                     <Barrinha  cor={tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*10}>
@@ -89,8 +97,8 @@ border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
 const Cab=styled.div`
-width:100%;height:50px;align-items:center;
-justify-content:space-evenly
+width:calc(100% - 40px);height:50px;align-items:center;
+justify-content:space-between;padding
 `
 const Conf=styled.div`
 flex-direction:column;background:;
@@ -116,7 +124,7 @@ flex-direction:column;
 height:100%;width:100%;
 background:white;border-radius:20px;
 justify-content:space-evenly;align-items:center;
-h1{margin:0;font-size:20px;font-weight:600;}
+h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
 `
 const Quadro=styled.div`
 height:calc(100% - 110px);width:calc(100% - 40px);

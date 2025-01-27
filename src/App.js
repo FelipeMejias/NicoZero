@@ -11,7 +11,7 @@ import Menu from "./Menu"
 import EscGrafico from "./EscGrafico"
 export function App(){
 
-    const [pag,setPag]=useState(0)
+    const [pag,setPag]=useState(1)
     const [dados,setDados]=useState(JSON.parse(localStorage.getItem("dados"))||info)
     const [cont,setCont]=useState(JSON.parse(localStorage.getItem("cont"))||inicioContagem)
     const texto1='Intervalo Boladas'

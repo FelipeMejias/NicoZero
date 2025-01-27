@@ -53,24 +53,20 @@ export default function Home({contexto}){
     return(
     <Inicial>
         
-        <Mostrador wi={'calc(100% - 100px)'} hei={'200px'} cont={cont} dados={dados} />
+        <Mostrador wi={'calc(100% - 100px)'} hei={'165px'} cont={cont} dados={dados} />
         <Cab>
             <Mudar onClick={cravar}>{aoLixo?'Joguei no lixo':'Bolei!'}</Mudar>
         </Cab>
         <Relogio>
             <Pers>
-            <main>
                 <h3>{aoLixo?texto3:texto4}</h3> 
                 <h3><strong>{h1}</strong></h3>
-                </main>
             <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora()} tipo={aoLixo?3:4} >
             </Grafico>
             </Pers>
             <Pers>
-                <main>
                 <h3>{aoLixo?texto2:texto1}</h3> 
                 <h3><strong>{h2}</strong></h3>
-                </main>
             <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora()} tipo={aoLixo?2:1} >
             </Grafico>
             </Pers>
@@ -85,9 +81,9 @@ main{max-width:220px;width:100%;
 display:flex;align-items:center;
 justify-content:space-between;}
 h3{
-font-size:20px;margin:10px 0 8px 0;
-font-weight:400;
-strong{font-weight:600; }
+font-size:16px;margin:0px 0 6px 0;
+font-weight:400;line-height:17px;
+strong{font-weight:600; font-size:20px;}
 }
 `
 const Relogio=styled.div`
@@ -111,11 +107,4 @@ background:yellow;border-radius:20px;
 cursor:pointer;margin:0 10px 0 10px;
 justify-content:center;align-items:center;
 p{font-size:18px;text-align:center;}
-`
-const Tela=styled.div`
-flex-direction:column;
-max-width:500px;
-height:100%;width:calc(100% - 200px);
-justify-content:space-evenly;align-items:center;
-h1{margin:0;font-size:20px;}
 `

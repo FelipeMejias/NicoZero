@@ -57,7 +57,7 @@ export default function Home({contexto}){
     }
     return(
         <Inicial>
-            <Mostrador wi={'calc(100% - 140px)'} hei={'90%'} cont={contProv} dados={dadosProv}/>
+            <Mostrador wi={'calc(100% - 140px)'} hei={'calc(100% - 50px)'} cont={contProv} dados={dadosProv}/>
             <Cab>
                 <Mudar cor={'#e07421'} onClick={voltar}><p>Voltar</p></Mudar>
                 <Sep>
@@ -73,14 +73,14 @@ export default function Home({contexto}){
 }
 const Inicial=styled.div`
 height:calc(100% - 50px);width:100%;padding-top:30px;
-align-items:center;justify-content:center;
+align-items:flex-start;justify-content:space-evenly;
 `
 const Sep=styled.div`
 flex-direction:column;width:100%;align-items:center;
 justify-content:space-between;height:180px;
 `
 const Cab=styled.div`
-flex-direction:column;margin-left:20px;
+flex-direction:column;
 width:100px;height:90%;align-items:center;
 justify-content:space-between;
 `

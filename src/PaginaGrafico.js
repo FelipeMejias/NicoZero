@@ -28,9 +28,9 @@ export default function PaginaGrafico({contexto}){
 }
 const Outra=styled.div`
 height:55%;
-min-width:calc(25% - 25px);
-max-width:calc(25% - 25px);
-background:white;border-radius:20px;
+min-width:calc(25% - 15px);
+max-width:calc(25% - 15px);
+background:white;border-radius:10px;
 opacity:${p=>p.selec?'30%':'100%'};
 cursor:pointer;
 justify-content:center;align-items:center;
@@ -52,5 +52,5 @@ flex-direction:column;align-items:center;
 `
 
 const Holder=styled.div`
-width:calc(100% - 40px);height:calc(100% - 100px)
+width:calc(100% - 40px);height:calc(100% - 130px)
 `
