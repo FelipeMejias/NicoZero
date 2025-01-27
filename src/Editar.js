@@ -2,10 +2,12 @@ import { useState } from "react"
 import styled from "styled-components"
 import { queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
+import { useNavigate } from "react-router-dom"
 
 export default function Home({contexto}){
     const {texto1,texto2,texto3,texto4,
         pag,setPag,dados,setDados,cont,setCont}=contexto
+    const navigate=useNavigate()
     const [dadosProv,setDadosProv]=useState(dados)
     const [contProv,setContProv]=useState(cont)
 
@@ -36,10 +38,10 @@ export default function Home({contexto}){
     function salvar(){
         setDados(dadosProv)
         setCont(contProv)
-        setPag(0)
+        navigate('/history')
     }
     function voltar(){
-        setPag(0)
+        navigate('/history')
     }
     function remover(){
         const nl=[...dadosProv]
@@ -55,51 +57,37 @@ export default function Home({contexto}){
     }
     return(
         <Inicial>
-        <Tela>
+            <Mostrador wi={'calc(100% - 140px)'} hei={'90%'} cont={contProv} dados={dadosProv}/>
             <Cab>
-                <Mudar onClick={voltar}>Voltar</Mudar>
-                <Mudar onClick={copiarTexto}>{copiado?'Copiado!':'Copiar'}</Mudar>
-                <Mudar onClick={handleColar}>Colar</Mudar>
-                <Mudar onClick={remover}>Remover</Mudar>
-                <Mudar onClick={salvar}>Salvar</Mudar>
+                <Mudar cor={'#e07421'} onClick={voltar}><p>Voltar</p></Mudar>
+                <Sep>
+                <Mudar onClick={copiarTexto}><p>{copiado?'Copiado!':'Copiar'}</p></Mudar>
+                <Mudar onClick={handleColar}><p>Colar</p></Mudar>
+                <Mudar onClick={remover}><p>Remover</p></Mudar>
+                </Sep>
+                <Mudar cor={'#3a6ac9'} onClick={salvar}><p>Salvar</p></Mudar>
             </Cab>
-            <Mostrador cont={contProv} dados={dadosProv}/>
-        </Tela>
-        <Menu>
-        </Menu>
+            
     </Inicial>
     )
 }
 const Inicial=styled.div`
-height:100vh;width:100vw;background:purple;
+height:calc(100% - 50px);width:100%;padding-top:30px;
+align-items:center;justify-content:center;
 `
-const Botao=styled.div`
-height:80px;width:90%;
-background:white;border-radius:20px;
-cursor:pointer;margin-bottom:20px;
-justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;}
-`
-const Menu=styled.div`
-flex-direction:column;
-height:100vh;width:200px;
-padding-top:50px;
+const Sep=styled.div`
+flex-direction:column;width:100%;align-items:center;
+justify-content:space-between;height:180px;
 `
 const Cab=styled.div`
-width:400px;height:60px;align-items:center;
-justify-content:space-evenly;
+flex-direction:column;margin-left:20px;
+width:100px;height:90%;align-items:center;
+justify-content:space-between;
 `
 const Mudar=styled.div`
 height:50px;width:90%;
-background:yellow;border-radius:20px;
+background:${p=>p.cor||'yellow'};border-radius:20px;
 cursor:pointer;margin:0 10px 0 10px;
 justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;}
-`
-const Tela=styled.div`
-flex-direction:column;
-max-width:500px;
-height:100%;width:calc(100% - 200px);
-justify-content:space-evenly;align-items:center;
-h1{margin:0;font-size:20px;}
+p{font-size:18px;text-align:center;color:${p=>p.cor?'white':'black'}}
 `

@@ -3,69 +3,47 @@ import styled from "styled-components"
 import { Grafico } from "./Grafico"
 import { info, inicioContagem } from "./back/info"
 import Editar from "./Editar"
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PaginaGrafico from "./PaginaGrafico"
+import Historico from "./Historico"
 import Home from "./Home"
-
+import Menu from "./Menu"
+import EscGrafico from "./EscGrafico"
 export function App(){
+
     const [pag,setPag]=useState(0)
     const [dados,setDados]=useState(JSON.parse(localStorage.getItem("dados"))||info)
     const [cont,setCont]=useState(JSON.parse(localStorage.getItem("cont"))||inicioContagem)
-    const texto1='Intervalo entre preparos'
-    const texto2='Intervalo entre descartes'
-    const texto3='Tempo preparo_descarte'
-    const texto4='Tempo descarte_preparo'
+    const texto1='Intervalo Boladas'
+    const texto2='Intervalo Lixos'
+    const texto3='Bolar até Lixo'
+    const texto4='Lixo até Bolar'
     useEffect(()=>{localStorage.setItem("dados", JSON.stringify(dados))},[dados])
     useEffect(()=>{localStorage.setItem("cont", JSON.stringify(cont))},[cont])
     const contexto={texto1,texto2,texto3,texto4,
         pag,setPag,dados,setDados,cont,setCont}
     return(
-    pag===false?
-    <Editar contexto={contexto}/>
-    :pag===0?
-    <Home contexto={contexto}/>
-        :
-    <Pagina>
-        <Outras>
-            <Outra selec={false} wid={true} onClick={()=>setPag(0)}><p>Voltar</p></Outra>
-            <Outra selec={pag==1} onClick={()=>setPag(1)}><p>{texto1}</p></Outra>
-            <Outra selec={pag==2} onClick={()=>setPag(2)}><p>{texto2}</p></Outra>
-            <Outra selec={pag==3} onClick={()=>setPag(3)}><p>{texto3}</p></Outra>
-            <Outra selec={pag==4} onClick={()=>setPag(4)}><p>{texto4}</p></Outra>
-        </Outras>
-        <Grafico cont={cont} dados={dados} tipo={pag} nome={
-            pag==1?texto1:
-            pag==2?texto2:
-            pag==3?texto3:
-            pag==4?texto4:'' }>
-        </Grafico>
-    </Pagina>
+        <BrowserRouter>
+        <Pagina>
+            <Menu />
+            <Routes>
+                <Route path='/' element={<Home contexto={contexto}/>}/>
+                <Route path='/edit' element={<Editar contexto={contexto}/>}/>
+                <Route path='/history' element={<Historico contexto={contexto}/>}/>
+                <Route path='/graphics' element={<EscGrafico contexto={contexto}/>}/>
+                <Route path='/graphic' element={<PaginaGrafico contexto={contexto}/>}/>
+            </Routes>
+        </Pagina>
+        </BrowserRouter>
     )
 }
 
-const Voltar=styled.div`
-height:calc(50% - 0px);width:40px;
-background:white;border-radius:20px;
-cursor:pointer;padding-bottom:5px;
-justify-content:center;align-items:center;
-font-size:35px;text-align:center;
-`
-const Outra=styled.div`
-height:calc(50% - 0px);width:${p=>p.wid?'90px':'calc(25% - 60px)'};
-background:white;border-radius:20px;
-opacity:${p=>p.selec?'30%':'100%'};
-cursor:pointer;
-justify-content:center;align-items:center;
-p{font-size:16px;text-align:center;line-height:19px;}
-`
-
 const Pagina=styled.div`
-height:100vh;width:100vw;background:purple;
+height:100vh;width:100vw;
+background:#67bf67;
 flex-direction:column;
 align-items:center;
+justify-content:flex;start
 `
 
 
-const Outras=styled.div`
-height:80px;width:100%;
-justify-content:space-evenly;
-align-items:center;
-`

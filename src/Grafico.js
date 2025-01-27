@@ -5,14 +5,14 @@ import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
 
-export function Grafico({tipo,nome,dados,cont}){
+export function Grafico({id,mini,tipo,nome,dados,cont}){
     const [lista,setLista]=useState([])
     const [tags,setTags]=useState([])
 
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
     const [zoom,setZoom]=useState(JSON.parse(localStorage.getItem("zoom"))||5)
     function scrollToEnd() {
-        const element = document.getElementById("grafico");
+        const element = document.getElementById(id);
         if (element) {
           element.scrollTo({
             left: element.scrollWidth, // Altura máxima do conteúdo
@@ -31,7 +31,16 @@ export function Grafico({tipo,nome,dados,cont}){
     useEffect(()=>{localStorage.setItem("sono", JSON.stringify(sono))},[sono])
     useEffect(()=>{localStorage.setItem("zoom", JSON.stringify(zoom))},[zoom])
     useEffect(construirLista,[tipo,zoom,sono])
-    return(
+    return(mini?
+        <Quadrinho id={id}>
+                {lista.map((tam,index)=><Holder>
+                    <Barrinha  cor={tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*4}>
+                        <Tag>{tags[index]?.slice(0,3)||''}</Tag>
+                    </Barrinha>
+                    {tam==88||tam==99?<></>:<p>{tam}</p>}
+                    
+                </Holder>)}
+            </Quadrinho>:
         <Tela>
             <Cab>
             <Conf>
@@ -60,7 +69,7 @@ export function Grafico({tipo,nome,dados,cont}){
             </Control>
             </Conf>
             </Cab>
-            <Quadro id='grafico'>
+            <Quadro id={id}>
                 {lista.map((tam,index)=><Holder>
                     <Barrinha  cor={tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*10}>
                         <Tag>{tags[index]?.slice(0,3)||''}</Tag>
@@ -73,39 +82,46 @@ export function Grafico({tipo,nome,dados,cont}){
         </Tela>
     )
 }
+const Quadrinho=styled.div`
+height:calc(100% - 20px);width:100%;
+background:white;
+border:1px solid black;padding-left:10px;
+overflow:auto;border-radius:7px;
+`
 const Cab=styled.div`
 width:100%;height:50px;align-items:center;
 justify-content:space-evenly
 `
 const Conf=styled.div`
 flex-direction:column;background:;
-height:100%;width:100px;
-h5{margin:0;width:100%;text-align:center;}
+height:100%;width:85px;
+h5{margin:0;width:100%;text-align:center;color:#848484}
 `
 const Control=styled.div`
 width:100%;height:40px;
 align-items:center;justify-content:space-between;
-p{font-size:22px;}
+p{font-size:22px;color:#848484;
+}
 `
 const Action=styled.div`
 cursor:pointer;
-width:30px;height:30px;
-border-radius:50%;
+width:25px;height:25px;
+border-radius:50%;padding:0 0 3px 1px;
 justify-content:center;align-items:center;
-font-size:28px;
-background:#b2b2b2;
+font-size:22px;color:#848484;
+background:#e0e0e0;
 `
 const Tela=styled.div`
 flex-direction:column;
-height:calc(100% - 100px);width:calc(100% - 50px);
+height:100%;width:100%;
 background:white;border-radius:20px;
 justify-content:space-evenly;align-items:center;
-h1{margin:0;font-size:20px;}
+h1{margin:0;font-size:20px;font-weight:600;}
 `
 const Quadro=styled.div`
-height:calc(100% - 110px);width:calc(100% - 100px);
+height:calc(100% - 110px);width:calc(100% - 40px);
 border:1px solid black;padding-left:10px;
-overflow:auto;
+overflow:auto;border-radius:7px;
 `
 const Barrinha=styled.div`
 height:${p=>p.tam}px;width:100%;max-height:100%;

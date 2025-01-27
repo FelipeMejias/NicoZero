@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { queHorasSao } from "./back/utils"
 import { mostrar } from "./back/mostrar"
 
-export default function Mostrador({dados,cont}){
+export default function Mostrador({wi,hei,dados,cont}){
     const [lista,setLista]=useState([])
     function scrollToEnd() {
         const element = document.getElementById("mostrador");
@@ -23,7 +23,7 @@ export default function Mostrador({dados,cont}){
     }
     useEffect(()=>construirLista(dados,cont),[dados,cont])
     return(
-        <Quadro id="mostrador">
+        <Quadro wi={wi} hei={hei} id="mostrador">
             {lista.map(lis=>{
                 if(typeof lis=='string'){
                     if(lis!='SEM DADOS'){
@@ -42,7 +42,8 @@ export default function Mostrador({dados,cont}){
 }
 
 const Quadro=styled.div`
-height:calc(100% - 100px);width:calc(100% - 100px);
+height:${p=>p.hei};width:${p=>p.wi};
+max-width:300px;
 flex-direction:column;align-items:center;
 overflow:auto;
 border-radius:10px;

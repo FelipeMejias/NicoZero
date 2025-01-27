@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react"
 import styled from "styled-components"
+import { Grafico } from "./Grafico"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { diferencaDeTempo, queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
 
 export default function Home({contexto}){
     const {texto1,texto2,texto3,texto4,
         pag,setPag,dados,setDados,cont,setCont}=contexto
+    const aoLixo=dados[dados.length-1].length==1
+    const navigate=useNavigate()
     const [h1,setH1]=useState('00:00')
     const [h2,setH2]=useState('00:00')
     function cravar(){
@@ -19,6 +23,7 @@ export default function Home({contexto}){
             novaLista.push([codigo])
         }
         setDados(novaLista)
+        seCravasse()
 
     }
     function seCravasse(){
@@ -32,62 +37,76 @@ export default function Home({contexto}){
             setH2(diferencaDeTempo(ultimo[0]))
         }
     }
+    function infosComAgora(){
+        const novaLista=[...dados]
+        const ultimo=dados[dados.length-1]
+        const codigo= queHorasSao()
+        if(ultimo.length==1){
+            novaLista.pop()
+            novaLista.push([ultimo[0],codigo])
+        }else{
+            novaLista.push([codigo])
+        }
+        return novaLista
+    }
     useEffect(seCravasse,[])
     return(
-        <Inicial>
-        <Tela>
-            <Cab>
-                <Mudar onClick={()=>setPag(false)}>Editar na mao</Mudar>
-                <Mudar onClick={cravar}>Adicionar</Mudar>
-                
-            </Cab>
-            <Mostrador cont={cont} dados={dados}/>
-        </Tela>
-        <Menu>
-            <Botao onClick={()=>setPag(1)}><p>{texto1}</p></Botao>
-            <Botao onClick={()=>setPag(2)}><p>{texto2}</p></Botao>
-            <Botao onClick={()=>setPag(3)}><p>{texto3}</p></Botao>
-            <Botao onClick={()=>setPag(4)}><p>{texto4}</p></Botao>
-            <Relogio>
-                <p><small>tempo</small></p>
-                <p>{h1}</p>
-                <p><small>intervalo</small></p>
-                <p>{h2}</p>
-            </Relogio>
-        </Menu>
+    <Inicial>
+        
+        <Mostrador wi={'calc(100% - 100px)'} hei={'200px'} cont={cont} dados={dados} />
+        <Cab>
+            <Mudar onClick={cravar}>{aoLixo?'Joguei no lixo':'Bolei!'}</Mudar>
+        </Cab>
+        <Relogio>
+            <Pers>
+            <main>
+                <h3>{aoLixo?texto3:texto4}</h3> 
+                <h3><strong>{h1}</strong></h3>
+                </main>
+            <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora()} tipo={aoLixo?3:4} >
+            </Grafico>
+            </Pers>
+            <Pers>
+                <main>
+                <h3>{aoLixo?texto2:texto1}</h3> 
+                <h3><strong>{h2}</strong></h3>
+                </main>
+            <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora()} tipo={aoLixo?2:1} >
+            </Grafico>
+            </Pers>
+    </Relogio>
     </Inicial>
     )
 }
-const Relogio=styled.div`
-width:90%;
-flex-direction:column;
-p{
-margin:0;font-size:22px;text-align:center;color:#19ea19;
-font-weight:700;
-small{color:white;font-size:20px;font-weight:400;}
+const Pers=styled.div`
+height:100%;width:calc(50% - 10px);
+flex-direction:column;align-items:center;
+main{max-width:220px;width:100%;
+display:flex;align-items:center;
+justify-content:space-between;}
+h3{
+font-size:20px;margin:10px 0 8px 0;
+font-weight:400;
+strong{font-weight:600; }
 }
 `
+const Relogio=styled.div`
+width:90%;height:calc(100% - 300px);background:;
+justify-content:space-between;
+
+`
 const Inicial=styled.div`
-height:100vh;width:100vw;background:purple;
+height:calc(100% - 50px);width:100%;padding-top:30px;
+flex-direction:column;align-items:center;
 `
-const Botao=styled.div`
-height:80px;width:90%;
-background:white;border-radius:20px;
-cursor:pointer;margin-bottom:20px;
-justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;}
-`
-const Menu=styled.div`
-flex-direction:column;
-height:100vh;width:200px;
-padding-top:50px;
-`
+
 const Cab=styled.div`
-width:400px;height:60px;align-items:center;
+margin:10px 0 10px 0;
+width:100%;height:60px;align-items:center;
 justify-content:space-evenly;
 `
 const Mudar=styled.div`
-height:50px;width:90%;
+height:50px;width:150px;
 background:yellow;border-radius:20px;
 cursor:pointer;margin:0 10px 0 10px;
 justify-content:center;align-items:center;
@@ -95,7 +114,8 @@ p{font-size:18px;text-align:center;}
 `
 const Tela=styled.div`
 flex-direction:column;
-height:100%;width:calc(100% - 200px);max-width:500px;
+max-width:500px;
+height:100%;width:calc(100% - 200px);
 justify-content:space-evenly;align-items:center;
 h1{margin:0;font-size:20px;}
 `
