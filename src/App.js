@@ -40,10 +40,10 @@ export function App(){
 
 const Pagina=styled.div`
 height:100vh;width:100vw;
-background:#67bf67;
+background:pink;
 flex-direction:column;
 align-items:center;
 justify-content:flex;start
 `
-
+//#67bf67
 
