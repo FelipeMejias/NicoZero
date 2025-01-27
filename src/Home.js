@@ -87,6 +87,7 @@ strong{font-weight:600; font-size:20px;}
 }
 `
 const Relogio=styled.div`
+max-height:190px;
 width:90%;height:calc(100% - 300px);background:;
 justify-content:space-between;
 

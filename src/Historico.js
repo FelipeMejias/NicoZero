@@ -11,7 +11,7 @@ export default function Historico({contexto}){
     
     return(
         <Inicial>
-            <Mostrador wi={'calc(100% - 40px)'} hei={'calc(100% - 120px)'} cont={cont} dados={dados}/>
+            <Mostrador wi={'calc(100% - 40px)'} hei={'calc(100% - 150px)'} cont={cont} dados={dados}/>
             <Cab>
                 <Mudar onClick={()=>navigate('/edit')}>Editar</Mudar>
             </Cab>

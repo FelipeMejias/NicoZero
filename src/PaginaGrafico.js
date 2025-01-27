@@ -52,5 +52,5 @@ flex-direction:column;align-items:center;
 `
 
 const Holder=styled.div`
-width:calc(100% - 40px);height:calc(100% - 130px)
+width:calc(100% - 40px);height:calc(100% - 150px)
 `

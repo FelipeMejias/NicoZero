@@ -57,7 +57,7 @@ export default function Home({contexto}){
     }
     return(
         <Inicial>
-            <Mostrador wi={'calc(100% - 140px)'} hei={'calc(100% - 50px)'} cont={contProv} dados={dadosProv}/>
+            <Mostrador wi={'calc(100% - 140px)'} hei={'calc(100% - 80px)'} cont={contProv} dados={dadosProv}/>
             <Cab>
                 <Mudar cor={'#e07421'} onClick={voltar}><p>Voltar</p></Mudar>
                 <Sep>
@@ -81,7 +81,7 @@ justify-content:space-between;height:180px;
 `
 const Cab=styled.div`
 flex-direction:column;
-width:100px;height:90%;align-items:center;
+width:100px;height:calc(100% - 80px);align-items:center;
 justify-content:space-between;
 `
 const Mudar=styled.div`
