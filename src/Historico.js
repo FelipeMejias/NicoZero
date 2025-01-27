@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { diferencaDeTempo, queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
 import { useNavigate } from "react-router-dom"
+import { LucideFilePenLine } from "lucide-react"
 
 export default function Historico({contexto}){
     const {texto1,texto2,texto3,texto4,
@@ -13,7 +14,9 @@ export default function Historico({contexto}){
         <Inicial>
             <Mostrador wi={'calc(100% - 40px)'} hei={'calc(100% - 150px)'} cont={cont} dados={dados}/>
             <Cab>
-                <Mudar onClick={()=>navigate('/edit')}>Editar</Mudar>
+                <Mudar onClick={()=>navigate('/edit')}>
+                    <LucideFilePenLine  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                </Mudar>
             </Cab>
             
         </Inicial>
@@ -32,11 +35,12 @@ width:100%;height:60px;align-items:center;
 justify-content:space-evenly;
 `
 const Mudar=styled.div`
-height:50px;width:150px;
-background:yellow;border-radius:20px;
-cursor:pointer;margin:0 10px 0 10px;
+flex-direction:column;
+height:62px;width:62px;
+background:yellow;
+border-radius:200px;
+cursor:pointer;margin:10px 0 0 0;
 justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;}
 `
 const Tela=styled.div`
 flex-direction:column;

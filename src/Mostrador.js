@@ -16,7 +16,6 @@ export default function Mostrador({wi,hei,dados,cont}){
       }
       
     function construirLista(d,cont){
-        console.log('njckex')
         const nova=mostrar(d,cont)
         setLista(nova)
         setTimeout(scrollToEnd,1);

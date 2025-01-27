@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
 import { useNavigate } from "react-router-dom"
+import { LucideArrowLeft, LucideCopy, LucideCopyCheck, LucideEraser, LucideSave, LucideUpload } from "lucide-react"
 
 export default function Home({contexto}){
     const {texto1,texto2,texto3,texto4,
@@ -59,13 +60,25 @@ export default function Home({contexto}){
         <Inicial>
             <Mostrador wi={'calc(100% - 140px)'} hei={'calc(100% - 80px)'} cont={contProv} dados={dadosProv}/>
             <Cab>
-                <Mudar cor={'#e07421'} onClick={voltar}><p>Voltar</p></Mudar>
+                <Mudar cor={'#e07421'} onClick={voltar}>
+                <LucideArrowLeft  style={{cursor:'pointer'}} size={25} color={'white'}/>
+                </Mudar>
                 <Sep>
-                <Mudar onClick={copiarTexto}><p>{copiado?'Copiado!':'Copiar'}</p></Mudar>
-                <Mudar onClick={handleColar}><p>Colar</p></Mudar>
-                <Mudar onClick={remover}><p>Remover</p></Mudar>
+                <Mudar onClick={copiarTexto}>
+                    {copiado?<LucideCopyCheck  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                    :<LucideCopy  style={{cursor:'pointer'}} size={25} color={'black'}/>}
+                    <p>{copiado?'Copiado!':'Copiar'}</p>
+                    </Mudar>
+                <Mudar onClick={handleColar}>
+                    <LucideUpload  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                </Mudar>
+                <Mudar onClick={remover}>
+                    <LucideEraser  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                </Mudar>
                 </Sep>
-                <Mudar cor={'#3a6ac9'} onClick={salvar}><p>Salvar</p></Mudar>
+                <Mudar cor={'#3a6ac9'} onClick={salvar}>
+                <LucideSave  style={{cursor:'pointer'}} size={25} color={'white'}/>
+                </Mudar>
             </Cab>
             
     </Inicial>
@@ -77,17 +90,19 @@ align-items:flex-start;justify-content:space-evenly;
 `
 const Sep=styled.div`
 flex-direction:column;width:100%;align-items:center;
-justify-content:space-between;height:180px;
+justify-content:space-between;height:210px;
 `
 const Cab=styled.div`
 flex-direction:column;
-width:100px;height:calc(100% - 80px);align-items:center;
+width:62px;height:calc(100% - 80px);align-items:center;
 justify-content:space-between;
 `
 const Mudar=styled.div`
-height:50px;width:90%;
-background:${p=>p.cor||'yellow'};border-radius:20px;
-cursor:pointer;margin:0 10px 0 10px;
+flex-direction:column;
+height:62px;width:62px;
+background:${p=>p.cor||'yellow'};
+border-radius:200px;
+cursor:pointer;
 justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;color:${p=>p.cor?'white':'black'}}
+p{margin:0;font-size:12px;text-align:center;color:${p=>p.cor?'white':'black'}}
 `

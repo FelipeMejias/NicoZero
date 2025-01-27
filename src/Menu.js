@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
 import { useLocation, useNavigate } from "react-router-dom"
+import { LucideChartColumnIncreasing, LucideCigarette, LucideListCheck } from "lucide-react"
 export default function Menu(){
     const navigate=useNavigate()
     const {pathname:pn}=useLocation()
@@ -11,14 +12,17 @@ export default function Menu(){
     return(
         <Tela>
             <Cab>
-                <Mudar sel={taNoHistory} onClick={()=>navigate('/history')}>
-                    <p>History</p>
+                <Mudar onClick={()=>navigate('/history')}>
+                    <LucideListCheck  style={{cursor:'pointer'}} 
+                    size={35} color={taNoHistory?'white':'#45e045'}/>
                 </Mudar>
-                <Mudar sel={pn=='/'} onClick={()=>navigate('/')}>
-                    <p>Home</p>
+                <Mudar  onClick={()=>navigate('/')}>
+                <LucideCigarette  style={{cursor:'pointer'}} 
+                    size={35} color={pn=='/'?'white':'#45e045'}/>
                 </Mudar>
-                <Mudar sel={taNoGraphic} onClick={()=>navigate('/graphics')}>
-                    <p>Graphics</p>
+                <Mudar  onClick={()=>navigate('/graphics')}>
+                <LucideChartColumnIncreasing  style={{cursor:'pointer'}} 
+                    size={35} color={taNoGraphic?'white':'#45e045'}/>
                 </Mudar>
             </Cab>
         </Tela>

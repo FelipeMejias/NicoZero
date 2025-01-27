@@ -23,7 +23,6 @@ export default function Home({contexto}){
             novaLista.push([codigo])
         }
         setDados(novaLista)
-        seCravasse()
 
     }
     function seCravasse(){
@@ -49,11 +48,11 @@ export default function Home({contexto}){
         }
         return novaLista
     }
-    useEffect(seCravasse,[])
+    useEffect(seCravasse,[dados])
     return(
     <Inicial>
         
-        <Mostrador wi={'calc(100% - 100px)'} hei={'165px'} cont={cont} dados={dados} />
+        <Mostrador wi={'calc(100% - 40px)'} hei={'165px'} cont={cont} dados={dados} />
         <Cab>
             <Mudar onClick={cravar}>{aoLixo?'Joguei no lixo':'Bolei!'}</Mudar>
         </Cab>
