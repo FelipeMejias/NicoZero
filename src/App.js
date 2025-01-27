@@ -16,8 +16,8 @@ export function App(){
     const [cont,setCont]=useState(JSON.parse(localStorage.getItem("cont"))||inicioContagem)
     const texto1='Intervalo Boladas'
     const texto2='Intervalo Lixos'
-    const texto3='Bolar até Lixo'
-    const texto4='Lixo até Bolar'
+    const texto3='Duração cigarro'
+    const texto4='Duração abstinência'
     useEffect(()=>{localStorage.setItem("dados", JSON.stringify(dados))},[dados])
     useEffect(()=>{localStorage.setItem("cont", JSON.stringify(cont))},[cont])
     const contexto={texto1,texto2,texto3,texto4,

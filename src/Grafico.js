@@ -7,7 +7,6 @@ import { tempoDescPrep } from "./back/graficos/tDescPrep"
 import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck } from "lucide-react";
 export function Grafico({id,mini,tipo,nome,dados,cont}){
     const [lista,setLista]=useState([])
-    const [tags,setTags]=useState([])
     const [alterando,setAlterando]=useState(false)
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
     const [zoom,setZoom]=useState(JSON.parse(localStorage.getItem("zoom"))||5)
@@ -23,21 +22,48 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
     function construirLista(){
         const funcs=[intervaloPreparos,intervaloDescartes,tempoPrepDesc,tempoDescPrep]
         const funcCerta=funcs[tipo-1]
-        const {resp,dias}=funcCerta(dados,cont,sono)
+        const resp=funcCerta(dados,cont,sono)
         setLista(resp)
-        setTags(dias)
         setTimeout(scrollToEnd,1);
     }
     useEffect(()=>{localStorage.setItem("sono", JSON.stringify(sono))},[sono])
     useEffect(()=>{localStorage.setItem("zoom", JSON.stringify(zoom))},[zoom])
     useEffect(construirLista,[tipo,zoom,sono])
+    function corBarra(tam,i=-1){
+        if(i==lista.length-1){
+            const tamAnt=lista[lista.length-2].tam||lista[lista.length-2].tam
+            if(tam>tamAnt){
+                return '#1fb71f' //verde
+            }else if(tam<tamAnt){
+                return '#ed3b28' //vermelho
+            }else{
+                return '#f4b618' //amarelo
+            }
+            
+        }else if(tam==99){
+            return '#f2a9ee' //sem dados
+        }else if(tam>sono){
+            return '#35588c' //sono
+        }else{
+            return '#79a5ea' //normal 
+        }
+    }
+    function tamanhoBarra(tam,fator=10){
+        if(tam==99){
+            return '50%'
+        }else if(tam>sono){
+            return '100%' 
+        }else{
+            return `${tam*zoom*fator}px`
+        }
+    }
     return(mini?
         <Quadrinho id={id}>
-                {lista.map((tam,index)=><Holder>
-                    <Barrinha  cor={index==lista.length-1?'#b5b5b5':tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*4}>
-                        <Tag>{tags[index]?.slice(0,3)||''}</Tag>
+                {lista.map((bar,i)=><Holder>
+                    <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,i)} tam={tamanhoBarra(bar.tam,4)}>
+                        <div>{bar.tex}</div>
                     </Barrinha>
-                    {tam==88||tam==99?<></>:<p>{tam}</p>}
+                    {bar.tam>sono?<></>:<p>{bar.num}</p>}
                     
                 </Holder>)}
             </Quadrinho>:
@@ -78,11 +104,11 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
 }
             
             <Quadro id={id}>
-                {lista.map((tam,index)=><Holder>
-                    <Barrinha  cor={tam===99?'#5ed2d6':tam==88?'#2828c9':'#1fb71f'} tam={tam*zoom*10}>
-                        <Tag>{tags[index]?.slice(0,3)||''}</Tag>
+                {lista.map((bar,index)=><Holder wi={bar.tam==99?'60px':'25px'}>
+                    <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam)} tam={tamanhoBarra(bar.tam)}>
+                        <div>{bar.tex}</div>
                     </Barrinha>
-                    {tam==88||tam==99?<></>:<p>{tam}</p>}
+                    {bar.tam>sono?<></>:<p>{bar.num}</p>}
                     
                 </Holder>)}
             </Quadro>
@@ -132,15 +158,18 @@ border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
 const Barrinha=styled.div`
-height:${p=>p.tam}px;width:100%;max-height:100%;
+height:${p=>p.tam};width:100%;max-height:100%;
 background:${p=>p.cor};
 border-top-right-radius:5px;
 border-top-left-radius:5px;
 display:flex;flex-direction:column;
-justify-content:flex-end;align-items:center;
+justify-content:${p=>p.roxa?'center':'flex-end'};align-items:center;
+color:${p=>p.roxa?'black':'white'};
+font-size:${p=>p.roxa?15:10}px;
+font-weight:${p=>p.roxa?300:500};
 `
 const Holder=styled.div`
-min-width:25px;
+min-width:${p=>p.wi};
 height:100%;flex-direction:column-reverse;
 justify-content:flex-start;align-items:center;
 margin-right:10px;
@@ -149,7 +178,4 @@ p{font-weight:600;
 font-size:17px;width:100%;text-align:center;
 margin:0;margin-right:1px;
 }
-`
-const Tag=styled.div`
-font-size:11px;font-weight:500;color:white;
 `

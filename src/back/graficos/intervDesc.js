@@ -1,40 +1,27 @@
 import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
 
 export function intervaloDescartes(dados,cont,minimoSono){
-    const listaDesc = [];
-    for (let l of dados) {if (l[1] !== '0000') listaDesc.push(l[1]);}
-    
-    let anterior = false;
-    const resp = [];
-    const diaInicio=nomeDiaInicio(cont)
-    const dias=[diaInicio]
-    let diaColocado=diaInicio
-    let horaPraVirar=listaDesc[0]
-    for (let h of listaDesc) {
-        if(h==''){
-            if(resp[resp.length-1]!==99)resp.push(99)
-            continue
-        }
-        if (anterior!==false) {
-            const barra=calcularDiferenca(anterior,h)
-            if(!barra){
-                
-            }else if(barra>minimoSono){
-                resp.push(88)
-            }else{
-                resp.push(barra)
+    let last 
+    const resp = []
+    let diaAseguir=nomeDiaInicio(cont)
+    for(let linha of dados){
+        if(isNaN(parseInt(linha[0]))){
+            resp.push({tam:99,tex:linha})
+        }else{
+            const [i,f]=linha
+            if(f){
+                if(last){
+                    let dia
+                    if(i<last || resp.length==0|| f<i){
+                        dia=diaAseguir
+                        diaAseguir=proximoDia(diaAseguir)
+                    }
+                    const barra=calcularDiferenca(last,f)
+                    resp.push({tam:barra,num:barra,tex:dia?.toUpperCase()?.slice(0,3)})
+                }
+                last=f
             }
-
-            if(h<horaPraVirar){
-                diaColocado=proximoDia(diaColocado)
-                dias.push(diaColocado)
-
-            }else{
-                dias.push('')
-            }
-            horaPraVirar=h
         }
-        anterior = h; 
     }
-    return {resp,dias}
+    return resp
 }

@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import 'dayjs/locale/pt-br'
+import { diasSemana } from './info'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.locale('pt-br')
@@ -9,19 +10,17 @@ export function queHorasSao(){
     return dayjs().tz('America/Sao_Paulo').format('HHmm') 
 }
 export function nomeDiaInicio(cont) {
-    const dia = dayjs(cont).tz('America/Sao_Paulo').format('dddd')
-    return dia.replace('-feira','').toUpperCase()
+    const dia = dayjs(cont).tz('America/Sao_Paulo').format('dddd').replace('-feira','')
+    return dia[0].toUpperCase()+dia.slice(1)
 }
 export function proximoDia(diaAtual) {
-    const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-    const indexAtual = diasSemana.findIndex((dia) => dia.toLowerCase() === diaAtual.toLowerCase())
+    const indexAtual = diasSemana.findIndex((dia) => dia === diaAtual)
     if (indexAtual === -1) {throw new Error('Dia inválido! ')}
     const indexProximo = (indexAtual + 1) % diasSemana.length
-    return diasSemana[indexProximo].toUpperCase()
+    return diasSemana[indexProximo]
 }
 
 export function calcularDiferenca(anterior,h){
-    if(anterior==''||h=='')return null
     let time1 = dayjs(`2025-01-01 ${anterior}`, 'YYYY-MM-DD HHmm')
     let time2 = dayjs(`2025-01-01 ${h}`, 'YYYY-MM-DD HHmm')
     if (time2.isBefore(time1)) {
@@ -40,7 +39,7 @@ export function diferencaDeTempo(horaString) {
     const diferencaMinutos = agora.diff(horaFornecida, 'minute');
     const horas = Math.floor(diferencaMinutos / 60);
     const minutos = diferencaMinutos % 60;
-    return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}`;
+    return `${String(horas).padStart(1)}:${String(minutos).padStart(2, '0')}`;
 }
 export function transfLinha(str){
     const tam=str.length

@@ -1,48 +1,25 @@
 import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
 
 export function tempoDescPrep(dados,cont,minimoSono){
-    const resp = [];
-    const diaInicio=nomeDiaInicio(cont)
-    const dias=[diaInicio]
-    let diaColocado=diaInicio
-    let horaPraVirar=dados[0][0]
-
-    let final = false;
-    for (let l of dados) {
-        if(l[0]==''&&l[1]==''){
-            if(resp[resp.length-1]!==99){
-                resp.push(99)
-                dias.push('')
+    let last 
+    const resp = []
+    let diaAseguir=nomeDiaInicio(cont)
+    for(let linha of dados){
+        if(isNaN(parseInt(linha[0]))){
+            resp.push({tam:99,tex:linha})
+        }else{
+            const [i,f]=linha
+            if(last){
+                let dia
+                if(i<last || resp.length==0 || f<i){
+                    dia=diaAseguir
+                    diaAseguir=proximoDia(diaAseguir)
+                }
+                const barra=calcularDiferenca(last,i)
+                resp.push({tam:barra,num:barra,tex:dia?.toUpperCase()?.slice(0,3)})
             }
-            continue
+            if(f)last=f
         }
-        if (final) {
-            const barra=calcularDiferenca(final,l[0])
-            if(!barra){
-                
-            }else if(barra>minimoSono){
-                resp.push(88)
-            }else{
-                resp.push(barra)
-            }
-
-            const dormiu=calcularDiferenca(l[0],l[1])
-            if(dormiu && dormiu>minimoSono){
-                resp.push(88)
-                dias.push('')
-            }
-
-            if(l[0]<horaPraVirar){
-                diaColocado=proximoDia(diaColocado)
-                dias.push(diaColocado)
-
-            }else{
-                dias.push('')
-            }
-            horaPraVirar=l[0]
-
-        }
-        final = l[1]; 
     }
-    return {resp,dias}
+    return resp
 }

@@ -20,12 +20,17 @@ export default function Home({contexto}){
         const linhas=textoColado.split('\n')
         const final=[]
         setContProv(linhas[0].replace('\r',''))
-        for(let linha of linhas.slice(1)){
-            const lis=linha.replace('\r','').split(',')
-            if(lis[1]===undefined){
-                final.push([transfLinha(lis[0])])
+        for(let linhaCrua of linhas.slice(1)){
+            const linha=linhaCrua.replace('\r','')
+            if(isNaN(parseInt(linha[0]))){
+                final.push(linha)
             }else{
-                final.push([transfLinha(lis[0]),transfLinha(lis[1])])
+                const lis=linha.split(',')
+                if(lis[1]===undefined){
+                    final.push([transfLinha(lis[0])])
+                }else{
+                    final.push([transfLinha(lis[0]),transfLinha(lis[1])])
+                }
             }
         }
         setDadosProv(final)

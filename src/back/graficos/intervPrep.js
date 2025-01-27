@@ -1,6 +1,30 @@
 import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
 
 export function intervaloPreparos(dados,cont,minimoSono) {
+    let last 
+    const resp = []
+    let diaAseguir=nomeDiaInicio(cont)
+    for(let linha of dados){
+        if(isNaN(parseInt(linha[0]))){
+            resp.push({tam:99,tex:linha})
+        }else{
+            const [i,f]=linha
+            if(last){
+                let dia
+                if(i<last || resp.length==0){
+                    dia=diaAseguir
+                    diaAseguir=proximoDia(diaAseguir)
+                }
+                const barra=calcularDiferenca(last,i)
+                resp.push({tam:barra,num:barra,tex:dia?.toUpperCase()?.slice(0,3)})
+            }
+            last=i
+        }
+    }
+    return resp
+}
+/*
+export function intervaloPreparos(dados,cont,minimoSono) {
     const listaPrep = [];
     for (let l of dados) {if (l[0] !== '0000') listaPrep.push(l[0]);}
 
@@ -39,3 +63,4 @@ export function intervaloPreparos(dados,cont,minimoSono) {
     }
     return {resp,dias}
 }
+    */

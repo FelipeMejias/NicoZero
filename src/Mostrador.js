@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { queHorasSao } from "./back/utils"
 import { mostrar } from "./back/mostrar"
+import { diasSemana } from "./back/info"
 
 export default function Mostrador({wi,hei,dados,cont}){
     const [lista,setLista]=useState([])
@@ -25,10 +26,10 @@ export default function Mostrador({wi,hei,dados,cont}){
         <Quadro wi={wi} hei={hei} id="mostrador">
             {lista.map(lis=>{
                 if(typeof lis=='string'){
-                    if(lis!='SEM DADOS'){
-                        return <h6 style={{color:'black',margin:'10px'}}>{lis}</h6>
+                    if(diasSemana.includes(lis)){
+                        return <h6 style={{background:'#d8d8d8',padding:'7px 0 7px 0'}}>{lis}</h6>
                     }else{
-                        return  <h6>{lis}</h6>
+                        return  <h6 style={{background:'#f2a9ee',marginBottom:'5px'}}>{lis}</h6>
                     }
                 }else{
                     const [inicio,final]=lis
@@ -59,10 +60,11 @@ small{
     width:50%;color:red;
     font-size:18px;font-weight:500}
 }
-h6{
+h6{width:100%;
 font-size:18px;font-weight:400;
 margin:0;
+display:flex;align-items:center;justify-content:center;
 min-height:30px;
-color:#5ed2d6;
+color:black;
 }
 `

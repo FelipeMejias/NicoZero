@@ -1,4 +1,4 @@
-
+export const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 export const inicioContagem= '2025-01-19'
 export const info=[
     ['0000','1841'],
