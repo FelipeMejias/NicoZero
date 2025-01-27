@@ -1,6 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
-import { queHorasSao } from "./back/utils"
+import { queHorasSao, transfLinha } from "./back/utils"
 import Mostrador from "./Mostrador"
 import { useNavigate } from "react-router-dom"
 import { LucideArrowLeft, LucideCopy, LucideCopyCheck, LucideEraser, LucideSave, LucideUpload } from "lucide-react"
@@ -13,17 +13,22 @@ export default function Home({contexto}){
     const [contProv,setContProv]=useState(cont)
 
     const [copiado,setCopiado]=useState(false)
+
     const handleColar = async () => {
     try {
         const textoColado = await navigator.clipboard.readText();
         const linhas=textoColado.split('\n')
-        const lis=[]
+        const final=[]
         setContProv(linhas[0].replace('\r',''))
         for(let linha of linhas.slice(1)){
-            const linhaPronta=linha.replace('\r','')
-            lis.push(linhaPronta.split(','))
+            const lis=linha.replace('\r','').split(',')
+            if(lis[1]===undefined){
+                final.push([transfLinha(lis[0])])
+            }else{
+                final.push([transfLinha(lis[0]),transfLinha(lis[1])])
+            }
         }
-        setDadosProv(lis)
+        setDadosProv(final)
     } catch (err) {
         console.error('Erro ao acessar a área de transferência', err);
     }
