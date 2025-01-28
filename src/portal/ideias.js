@@ -8,8 +8,8 @@ export const ideias=[
     },{
         nome:'Code Sphere',
         razao:'"Code Sphere" evoca a ideia de um universo ou comunidade completa, onde tudo gira em torno de programação. O termo "sphere" cria a sensação de algo envolvente e inovador, ideal para atrair pessoas interessadas em explorar e mergulhar no mundo do código. É único, moderno e altamente visual, o que permite criar uma marca cativante.',
-        logo:false,
-        desc:''
+        logo:true,path:'codesphere',
+        desc:'Aqui a esfera brilhante no centro representa o universo do código, enquanto a tipografia gradiente dá um toque moderno e tecnológico. A tagline reforça a ideia de que o CodeSphere é um espaço completo e envolvente para quem programa!'
     },{
         nome:'Code Nexus',
         razao:'"Code Nexus" transmite a ideia de um ponto de conexão central para programadores, onde diferentes conhecimentos, habilidades e experiências se encontram. A palavra “nexus” sugere um hub dinâmico e colaborativo, o que é perfeito para criar uma identidade que combine aprendizado, compartilhamento e evolução no mundo da programação. O nome soa sofisticado e moderno, ideal para atrair alunos e criar uma marca diferenciada.',

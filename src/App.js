@@ -13,6 +13,7 @@ import NomeLogo from "./portal/NomeLogo"
 import Sphere from "./portal/Sphere"
 import Odissey from "./portal/Odissey"
 import Nexus from "./portal/Nexus"
+import Portal from "./portal/Portal"
 export function App(){
 
     const [pag,setPag]=useState(1)
@@ -40,6 +41,7 @@ export function App(){
                 <Route path='/ideias/portalcode' element={<Sphere/>}/>
                 <Route path='/ideias/codenexus' element={<Nexus/>}/>
                 <Route path='/ideias/codeodissey' element={<Odissey/>}/>
+                <Route path='/ideias/codesphere' element={<Portal/>}/>
             </Routes>
         </Pagina>
         </BrowserRouter>
