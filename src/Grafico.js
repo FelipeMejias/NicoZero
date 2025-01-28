@@ -49,6 +49,9 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
         }
     }
     function tamanhoBarra(tam,fator=10){
+        if(!tam){
+            return `${0.1*zoom*fator}px`
+        }
         if(tam==99){
             return '50%'
         }else if(tam>sono){
@@ -59,7 +62,7 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
     }
     return(mini?
         <Quadrinho id={id}>
-                {lista.map((bar,i)=><Holder>
+                {lista.map((bar,i)=><Holder wi={'25px'}>
                     <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,i)} tam={tamanhoBarra(bar.tam,4)}>
                         <div>{bar.tex}</div>
                     </Barrinha>
@@ -172,10 +175,10 @@ const Holder=styled.div`
 min-width:${p=>p.wi};
 height:100%;flex-direction:column-reverse;
 justify-content:flex-start;align-items:center;
-margin-right:10px;
+margin-right:8px;
 
-p{font-weight:600;
-font-size:17px;width:100%;text-align:center;
+p{font-weight:500;
+font-size:16px;width:100%;text-align:center;
 margin:0;margin-right:1px;
 }
 `
