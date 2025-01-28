@@ -28,16 +28,14 @@ export function App(){
     const texto3='Duração cigarro'
     const texto4='Duração abstinência'
 
-    const [dadosProv,setDadosProv]=useState(null)
-    const [contProv,setContProv]=useState(null)
+    const [dadosProv,setDadosProv]=useState(JSON.parse(localStorage.getItem(chaveDados))||info)
+    const [contProv,setContProv]=useState(JSON.parse(localStorage.getItem(chaveCont))||inicioContagem)
 
     useEffect(()=>{
         localStorage.setItem(chaveDados, JSON.stringify(dados))
-        setDadosProv(dados)
     },[dados])
     useEffect(()=>{
         localStorage.setItem(chaveCont, JSON.stringify(cont))
-        setContProv(cont)
     },[cont])
     const contexto={texto1,texto2,texto3,texto4,
         dadosProv,setDadosProv,contProv,setContProv,

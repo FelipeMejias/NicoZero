@@ -1,6 +1,7 @@
 import { calcularDiferenca, nomeDiaInicio, proximoDia } from "./utils";
 
 export function mostrar(dados,cont){
+    console.log(dados)
     let diaAseguir=nomeDiaInicio(cont)
     const resp=[]
     let last=Infinity
