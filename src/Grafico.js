@@ -5,7 +5,7 @@ import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
 import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck } from "lucide-react";
-export function Grafico({id,mini,tipo,nome,dados,cont}){
+export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
     const [lista,setLista]=useState([])
     const [alterando,setAlterando]=useState(false)
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
@@ -30,16 +30,30 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
     useEffect(()=>{localStorage.setItem("zoom", JSON.stringify(zoom))},[zoom])
     useEffect(construirLista,[tipo,zoom,sono])
     function corBarra(tam,i=-1){
-        if(i==lista.length-1){
-            const tamAnt=lista[lista.length-2].tam||lista[lista.length-2].tam
-            if(tam>tamAnt){
-                return '#1fb71f' //verde
-            }else if(tam<tamAnt){
-                return '#ed3b28' //vermelho
-            }else{
-                return '#f4b618' //amarelo
+        const len=lista.length
+        if(i==len-1){
+            let c=len-1
+            const bases=[]
+            while(c>0 && bases.length<3){
+                if(lista[c].tam<sono)bases.push(lista[c].tam)
+                c--
             }
-            
+            let points=3
+            for(let valor of bases){
+                if(tam > valor)points++
+                if(tam < valor)points--
+            }
+            if(points<=1){
+                return '#ed3b28' //vermelho
+            }else if(points==3){
+                return '#f4a111' //laranja
+            }else if(points==3){
+                return '#edd81a' //amarelo
+            }else if(points==3){
+                return '#a6d63e' //amarelo-verde
+            }else if(points==3){
+                return '#1fb71f' //verde
+            }
         }else if(tam==99){
             return '#f2a9ee' //sem dados
         }else if(tam>sono){
@@ -107,8 +121,8 @@ export function Grafico({id,mini,tipo,nome,dados,cont}){
 }
             
             <Quadro id={id}>
-                {lista.map((bar,index)=><Holder wi={bar.tam==99?'60px':'25px'}>
-                    <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam)} tam={tamanhoBarra(bar.tam)}>
+                {lista.map((bar,i)=><Holder wi={bar.tam==99?'60px':'25px'}>
+                    <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,cravado?i:false)} tam={tamanhoBarra(bar.tam)}>
                         <div>{bar.tex}</div>
                     </Barrinha>
                     {bar.tam>sono?<></>:<p>{bar.num}</p>}

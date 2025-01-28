@@ -1,11 +1,33 @@
 import styled from "styled-components"
 import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
+import { queHorasSao } from "./back/utils"
 
 export default function PaginaGrafico({contexto}){
     const {texto1,texto2,texto3,texto4,
         pag,setPag,dados,setDados,cont,setCont}=contexto
-    const navigate=useNavigate()
+    const aoLixo=dados[dados.length-1].length==1
+    const temProximo=aoLixo?[2,3]:[1,4]
+    const cravado=temProximo.includes(pag)
+    function infosComAgora(){
+        const novaLista=[...dados]
+        const ultimo=dados[dados.length-1]
+        const codigo= queHorasSao()
+        if(ultimo.length==1){
+            novaLista.pop()
+            novaLista.push([ultimo[0],codigo])
+        }else{
+            novaLista.push([codigo])
+        }
+        return novaLista
+    }
+    function gerarDados(){
+        if(cravado){
+            return infosComAgora()
+        }else{
+            return dados
+        }
+    }
     return(
     <Inicial>
         <Outras>
@@ -15,7 +37,10 @@ export default function PaginaGrafico({contexto}){
             <Outra selec={pag==4} onClick={()=>setPag(4)}><p>{texto4}</p></Outra>
         </Outras>
         <Holder>
-            <Grafico id='unico' cont={cont} dados={dados} tipo={pag} nome={
+            <Grafico id='unico' cont={cont} 
+            cravado={cravado}
+            dados={gerarDados()} 
+            tipo={pag} nome={
                 pag==1?texto1:
                 pag==2?texto2:
                 pag==3?texto3:
