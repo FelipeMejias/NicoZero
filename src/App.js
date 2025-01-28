@@ -9,6 +9,10 @@ import Historico from "./Historico"
 import Home from "./Home"
 import Menu from "./Menu"
 import EscGrafico from "./EscGrafico"
+import NomeLogo from "./portal/NomeLogo"
+import Sphere from "./portal/Sphere"
+import Odissey from "./portal/Odissey"
+import Nexus from "./portal/Nexus"
 export function App(){
 
     const [pag,setPag]=useState(1)
@@ -32,6 +36,10 @@ export function App(){
                 <Route path='/history' element={<Historico contexto={contexto}/>}/>
                 <Route path='/graphics' element={<EscGrafico contexto={contexto}/>}/>
                 <Route path='/graphic' element={<PaginaGrafico contexto={contexto}/>}/>
+                <Route path='/ideias' element={<NomeLogo />}/>
+                <Route path='/ideias/portalcode' element={<Sphere/>}/>
+                <Route path='/ideias/codenexus' element={<Nexus/>}/>
+                <Route path='/ideias/codeodissey' element={<Odissey/>}/>
             </Routes>
         </Pagina>
         </BrowserRouter>
