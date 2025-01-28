@@ -30,28 +30,32 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
     useEffect(()=>{localStorage.setItem("zoom", JSON.stringify(zoom))},[zoom])
     useEffect(construirLista,[tipo,zoom,sono])
     function corBarra(tam,i=-1){
+      
         const len=lista.length
         if(i==len-1){
             let c=len-1
             const bases=[]
             while(c>0 && bases.length<3){
+               
                 if(lista[c].tam<sono)bases.push(lista[c].tam)
                 c--
             }
             let points=3
+           
             for(let valor of bases){
                 if(tam > valor)points++
                 if(tam < valor)points--
             }
+            console.log(points)
             if(points<=1){
                 return '#ed3b28' //vermelho
-            }else if(points==3){
+            }else if(points==2){
                 return '#f4a111' //laranja
             }else if(points==3){
                 return '#edd81a' //amarelo
-            }else if(points==3){
+            }else if(points==4){
                 return '#a6d63e' //amarelo-verde
-            }else if(points==3){
+            }else if(points>=5){
                 return '#1fb71f' //verde
             }
         }else if(tam==99){

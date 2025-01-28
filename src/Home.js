@@ -66,7 +66,7 @@ export default function Home({contexto}){
         
         <Mostrador wi={'calc(100% - 40px)'} hei={'165px'} cont={cont} dados={dados} />
         <Cab>
-            <Mudar onClick={cravar}>{aoLixo?'Joguei no lixo':'Bolei!'}</Mudar>
+            <Mudar onClick={cravar}><p>{aoLixo?'Clique ao jogar no lixo':'Clique ao bolar'}</p></Mudar>
         </Cab>
         <Relogio>
             <Pers onClick={()=>{setPag(aoLixo?3:4);navigate('/graphic')}}>
@@ -115,9 +115,9 @@ width:100%;height:60px;align-items:center;
 justify-content:space-evenly;
 `
 const Mudar=styled.div`
-height:50px;width:150px;
-background:yellow;border-radius:20px;
+height:50px;width:225px;
+background:#388738;border-radius:40px;
 cursor:pointer;margin:0 10px 0 10px;
 justify-content:center;align-items:center;
-p{font-size:18px;text-align:center;}
+p{font-size:18px;text-align:center;font-weight:600;color:white;}
 `

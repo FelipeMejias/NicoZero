@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { queHorasSao, transfLinha } from "./back/utils"
 import Mostrador from "./Mostrador"
@@ -87,11 +87,13 @@ export default function Home({contexto}){
         
         setDadosProv(nl)
     }
+    useEffect(()=>{setDadosProv(dados)},[])
     return(
         <Inicial>
             <Cab>
             <Mudar cor={'#e07421'} onClick={voltar}>
                 <LucideArrowLeft  style={{cursor:'pointer'}} size={25} color={'white'}/>
+                <p>Back</p>
                 </Mudar>
                 <Novo>
                 <input
@@ -101,9 +103,11 @@ export default function Home({contexto}){
                 />
                 <Mudar onClick={add}>
                     <LucideCheck  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                    <p>Add</p>
                 </Mudar>
                 <Mudar onClick={remover}>
                     <LucideEraser  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                    <p>Erase</p>
                 </Mudar>
                 </Novo>
             </Cab>
@@ -118,12 +122,14 @@ export default function Home({contexto}){
                     </Mudar>
                 <Mudar onClick={handleColar}>
                     <LucideUpload  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                    <p>Paste</p>
                 </Mudar>
                 
                 </Sep>
                 
                 <Mudar cor={'#3a6ac9'} onClick={salvar}>
                 <LucideSave  style={{cursor:'pointer'}} size={25} color={'white'}/>
+                <p>Save</p>
                 </Mudar>
             </Cab>
             
@@ -136,7 +142,7 @@ height:170px;
 align-items:center;
 justify-content:space-between;
 `
-const Inicial=styled.div`
+const Inicial=styled.div`max-width:520px;
 height:calc(100% - 50px);width:100%;padding-top:30px;
 align-items:flex-start;justify-content:space-evenly;
 input{
