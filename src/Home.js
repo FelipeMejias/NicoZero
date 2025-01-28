@@ -28,8 +28,6 @@ export default function Home({contexto}){
         const ultimo=dados[dados.length-1]
         const ant=dados[dados.length-2]
         const penAnt=dados[dados.length-3]
-        console.log(ultimo)
-        console.log(ant)
         if(ultimo.length==1){
             setH1(diferencaDeTempo(ultimo[0]))
             setH2(diferencaDeTempo(ant.length==1?penAnt[1]:ant[1]))
@@ -50,7 +48,19 @@ export default function Home({contexto}){
         }
         return novaLista
     }
-    useEffect(seCravasse,[dados])
+    const [intervalo,setIntervalo]=useState(null)
+    useEffect(() => {
+        if (intervalo) {
+            clearInterval(intervalo); // Limpa o intervalo anterior
+        }
+        const minutos=1
+        const novoIntervalo = setInterval(seCravasse, minutos * 60 * 1000); // Cria um novo intervalo
+        setIntervalo(novoIntervalo); // Atualiza o estado com o novo intervalo
+    
+        seCravasse(); // Executa a função imediatamente
+    
+        return () => clearInterval(novoIntervalo); // Limpa o intervalo ao desmontar ou atualizar
+    }, [dados]);
     return(
     <Inicial>
         
@@ -59,13 +69,13 @@ export default function Home({contexto}){
             <Mudar onClick={cravar}>{aoLixo?'Joguei no lixo':'Bolei!'}</Mudar>
         </Cab>
         <Relogio>
-            <Pers>
+            <Pers onClick={()=>{setPag(aoLixo?3:4);navigate('/graphic')}}>
                 <h3>{aoLixo?texto3:texto4}</h3> 
                 <h3><strong>{h1}</strong></h3>
             <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora()} tipo={aoLixo?3:4} >
             </Grafico>
             </Pers>
-            <Pers>
+            <Pers onClick={()=>{setPag(aoLixo?2:1);navigate('/graphic')}}>
                 <h3>{aoLixo?texto2:texto1}</h3> 
                 <h3><strong>{h2}</strong></h3>
             <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora()} tipo={aoLixo?2:1} >
@@ -76,6 +86,7 @@ export default function Home({contexto}){
     )
 }
 const Pers=styled.div`
+cursor:pointer;
 height:100%;width:calc(50% - 10px);
 flex-direction:column;align-items:center;
 main{max-width:220px;width:100%;

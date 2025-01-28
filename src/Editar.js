@@ -15,8 +15,8 @@ export default function Home({contexto}){
     const [copiado,setCopiado]=useState(false)
     const [texto,setTexto]=useState('')
     function add(){
-        const novaLista=[...dados]
-        const ultimo=dados[dados.length-1]
+        const novaLista=[...dadosProv]
+        const ultimo=dadosProv[dadosProv.length-1]
         if(ultimo.length==1){
             novaLista.pop()
             novaLista.push([ultimo[0],texto])
@@ -25,7 +25,6 @@ export default function Home({contexto}){
         }
         setDadosProv(novaLista)
         setTexto('')
-        navigate('/edit')
     }
     function editarInput(e){
         const nova=e.target.value
@@ -60,7 +59,11 @@ export default function Home({contexto}){
         let str=``
         str+=`${cont}\n`
         for(let linha of dados){
-            str+=`${linha[0]}${linha[1]?`,${linha[1]}`:''}\n`
+            if(typeof linha == 'string'){
+                str+=`${linha}\n`
+            }else{
+                str+=`${linha[0]}${linha[1]?`,${linha[1]}`:''}\n`
+            }
         }
         navigator.clipboard.writeText(str).then(() => {setCopiado(true);setTimeout(() => setCopiado(false), 2000)}).catch(err => console.error('Erro ao copiar o texto: ', err));
     }
