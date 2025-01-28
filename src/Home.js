@@ -27,9 +27,12 @@ export default function Home({contexto}){
     function seCravasse(){
         const ultimo=dados[dados.length-1]
         const ant=dados[dados.length-2]
+        const penAnt=dados[dados.length-3]
+        console.log(ultimo)
+        console.log(ant)
         if(ultimo.length==1){
             setH1(diferencaDeTempo(ultimo[0]))
-            setH2(diferencaDeTempo(ant[1]))
+            setH2(diferencaDeTempo(ant.length==1?penAnt[1]:ant[1]))
         }else{
             setH1(diferencaDeTempo(ultimo[1]))
             setH2(diferencaDeTempo(ultimo[0]))
