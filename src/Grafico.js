@@ -33,7 +33,7 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
       
         const len=lista.length
         if(i==len-1){
-            let c=len-1
+            let c=len-2
             const bases=[]
             while(c>0 && bases.length<3){
                
@@ -43,14 +43,15 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
             let points=3
            
             for(let valor of bases){
+                console.log(valor)
                 if(tam > valor)points++
                 if(tam < valor)points--
             }
-            console.log(points)
+            
             if(points<=1){
                 return '#ed3b28' //vermelho
             }else if(points==2){
-                return '#f4a111' //laranja
+                return '#f9741b' //laranja
             }else if(points==3){
                 return '#edd81a' //amarelo
             }else if(points==4){
