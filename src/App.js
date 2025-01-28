@@ -16,16 +16,31 @@ import Nexus from "./portal/Nexus"
 import Portal from "./portal/Portal"
 export function App(){
 
+    const chaveDados='dados2'
+    const chaveCont='cont1'
+
     const [pag,setPag]=useState(1)
-    const [dados,setDados]=useState(JSON.parse(localStorage.getItem("dados"))||info)
-    const [cont,setCont]=useState(JSON.parse(localStorage.getItem("cont"))||inicioContagem)
+    const [dados,setDados]=useState(JSON.parse(localStorage.getItem(chaveDados))||info)
+    const [cont,setCont]=useState(JSON.parse(localStorage.getItem(chaveCont))||inicioContagem)
+
     const texto1='Intervalo Boladas'
     const texto2='Intervalo Lixos'
     const texto3='Duração cigarro'
     const texto4='Duração abstinência'
-    useEffect(()=>{localStorage.setItem("dados", JSON.stringify(dados))},[dados])
-    useEffect(()=>{localStorage.setItem("cont", JSON.stringify(cont))},[cont])
+
+    const [dadosProv,setDadosProv]=useState(null)
+    const [contProv,setContProv]=useState(null)
+
+    useEffect(()=>{
+        localStorage.setItem(chaveDados, JSON.stringify(dados))
+        setDadosProv(dados)
+    },[dados])
+    useEffect(()=>{
+        localStorage.setItem(chaveCont, JSON.stringify(cont))
+        setContProv(cont)
+    },[cont])
     const contexto={texto1,texto2,texto3,texto4,
+        dadosProv,setDadosProv,contProv,setContProv,
         pag,setPag,dados,setDados,cont,setCont}
     return(
         <BrowserRouter>

@@ -23,7 +23,6 @@ export default function Home({contexto}){
             novaLista.push([codigo])
         }
         setDados(novaLista)
-
     }
     function seCravasse(){
         const ultimo=dados[dados.length-1]

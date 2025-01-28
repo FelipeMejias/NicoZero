@@ -7,10 +7,10 @@ import { LucideArrowLeft, LucideCopy, LucideCopyCheck, LucideEraser, LucideSave,
 
 export default function Home({contexto}){
     const {texto1,texto2,texto3,texto4,
+        dadosProv,setDadosProv,contProv,setContProv,
         pag,setPag,dados,setDados,cont,setCont}=contexto
     const navigate=useNavigate()
-    const [dadosProv,setDadosProv]=useState(dados)
-    const [contProv,setContProv]=useState(cont)
+    
 
     const [copiado,setCopiado]=useState(false)
 
