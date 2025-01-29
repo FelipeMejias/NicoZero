@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { diferencaDeTempo, queHorasSao } from "./back/utils"
+import { diferencaDeTempo, englobar, queHorasSao } from "./back/utils"
 import Mostrador from "./Mostrador"
 
 export default function Home({contexto}){
@@ -12,6 +12,8 @@ export default function Home({contexto}){
     const navigate=useNavigate()
     const [h1,setH1]=useState('00:00')
     const [h2,setH2]=useState('00:00')
+    const [infosComAgora,setInfosComAgora]=useState(englobar(dados))
+   
     function cravar(){
         const novaLista=[...dados]
         const ultimo=dados[dados.length-1]
@@ -35,19 +37,10 @@ export default function Home({contexto}){
             setH1(diferencaDeTempo(ultimo[1]))
             setH2(diferencaDeTempo(ultimo[0]))
         }
+        setInfosComAgora(englobar(dados))
     }
-    function infosComAgora(){
-        const novaLista=[...dados]
-        const ultimo=dados[dados.length-1]
-        const codigo= queHorasSao()
-        if(ultimo.length==1){
-            novaLista.pop()
-            novaLista.push([ultimo[0],codigo])
-        }else{
-            novaLista.push([codigo])
-        }
-        return novaLista
-    }
+    
+
     const [intervalo,setIntervalo]=useState(null)
     useEffect(() => {
         if (intervalo) {
@@ -56,9 +49,7 @@ export default function Home({contexto}){
         const minutos=1
         const novoIntervalo = setInterval(seCravasse, minutos * 60 * 1000); // Cria um novo intervalo
         setIntervalo(novoIntervalo); // Atualiza o estado com o novo intervalo
-    
-        seCravasse(); // Executa a função imediatamente
-    
+        seCravasse()
         return () => clearInterval(novoIntervalo); // Limpa o intervalo ao desmontar ou atualizar
     }, [dados]);
     return(
@@ -72,13 +63,13 @@ export default function Home({contexto}){
             <Pers onClick={()=>{setPag(aoLixo?3:4);navigate('/graphic')}}>
                 <h3>{aoLixo?texto3:texto4}</h3> 
                 <h3><strong>{h1}</strong></h3>
-            <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora()} tipo={aoLixo?3:4} >
+            <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora} tipo={aoLixo?3:4} >
             </Grafico>
             </Pers>
             <Pers onClick={()=>{setPag(aoLixo?2:1);navigate('/graphic')}}>
                 <h3>{aoLixo?texto2:texto1}</h3> 
                 <h3><strong>{h2}</strong></h3>
-            <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora()} tipo={aoLixo?2:1} >
+            <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora} tipo={aoLixo?2:1} >
             </Grafico>
             </Pers>
     </Relogio>

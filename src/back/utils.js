@@ -26,9 +26,9 @@ export function calcularDiferenca(anterior,h){
     if (time2.isBefore(time1)) {
         time2 = time2.add(1, 'day')
     }
-    const dif = time2.diff(time1, 'hour', true) 
-    const barra=parseFloat(dif.toFixed(1))
-    return barra
+    const dif = time2.diff(time1, 'hour', true)
+    const num=transformarEmTempo(dif)
+    return {tam:dif,num}
 }
 export function diferencaDeTempo(horaString) {
     const agora = dayjs().tz('America/Sao_Paulo'); // Hora atual com fuso horário
@@ -55,4 +55,23 @@ export function transfLinha(str){
     }else if(tam==1){
         return `0${str}00`
     }
+}
+export function englobar(dados){
+        const novaLista=[...dados]
+        const ultimo=dados[dados.length-1]
+        const codigo= queHorasSao()
+        if(ultimo.length==1){
+            novaLista.pop()
+            novaLista.push([ultimo[0],codigo])
+        }else{
+            novaLista.push([codigo])
+        }
+        return novaLista
+    }
+export function transformarEmTempo(numero){
+    const horas=Math.floor(numero / 1)
+    const fracao=numero % 1
+    const minutos=(fracao*60).toFixed(0)
+    const m=minutos.length==1?`0${minutos}`:minutos
+    return {h:horas,m}
 }

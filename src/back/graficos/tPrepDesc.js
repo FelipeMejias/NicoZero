@@ -15,11 +15,11 @@ export function tempoPrepDesc(dados,cont,minimoSono){
                     dia=diaAseguir
                     diaAseguir=proximoDia(diaAseguir)
                 }
-                const barra=calcularDiferenca(i,f)
-                if(calcularDiferenca(last,i)>minimoSono){
+                const {tam,num}=calcularDiferenca(i,f)
+                if(calcularDiferenca(last,i).tam>minimoSono){
                     resp.push({tam:88})
                 }
-                resp.push({tam:barra,num:barra,tex:dia?.toUpperCase()?.slice(0,3)})
+                resp.push({tam,num,tex:dia?.toUpperCase()?.slice(0,3)})
             }
             last=f||i
         }

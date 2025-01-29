@@ -1,4 +1,4 @@
-import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
+import { calcularDiferenca, nomeDiaInicio, proximoDia, transformar } from "../utils";
 
 export function intervaloPreparos(dados,cont,minimoSono) {
     let last 
@@ -15,8 +15,8 @@ export function intervaloPreparos(dados,cont,minimoSono) {
                     dia=diaAseguir
                     diaAseguir=proximoDia(diaAseguir)
                 }
-                const barra=calcularDiferenca(last,i)
-                resp.push({tam:barra,num:barra,tex:dia?.toUpperCase()?.slice(0,3)})
+                const {tam,num}=calcularDiferenca(last,i)
+                resp.push({tam,num,tex:dia?.toUpperCase()?.slice(0,3)})
             }
             last=i
         }

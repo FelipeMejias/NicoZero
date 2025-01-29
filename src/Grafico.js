@@ -45,18 +45,19 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
             for(let valor of bases){
                 console.log(valor)
                 if(tam > valor)points++
+                if(tam == valor)points+=0.5
                 if(tam < valor)points--
             }
             
-            if(points<=1){
+            if(points<2){
                 return '#ed3b28' //vermelho
-            }else if(points==2){
+            }else if(points>=2 && points<3){
                 return '#f9741b' //laranja
             }else if(points==3){
                 return '#edd81a' //amarelo
-            }else if(points==4){
+            }else if(points>3 && points<=4){
                 return '#a6d63e' //amarelo-verde
-            }else if(points>=5){
+            }else if(points>4){
                 return '#1fb71f' //verde
             }
         }else if(tam==99){
@@ -85,7 +86,7 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
                     <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,i)} tam={tamanhoBarra(bar.tam,4)}>
                         <div>{bar.tex}</div>
                     </Barrinha>
-                    {bar.tam>sono?<></>:<p>{bar.num}</p>}
+                    {bar.tam>sono?<></>:<p>{bar.num.h}<small>{bar.num.m}</small></p>}
                     
                 </Holder>)}
             </Quadrinho>:
@@ -130,7 +131,7 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
                     <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,cravado?i:false)} tam={tamanhoBarra(bar.tam)}>
                         <div>{bar.tex}</div>
                     </Barrinha>
-                    {bar.tam>sono?<></>:<p>{bar.num}</p>}
+                    {bar.tam>sono?<></>:<p>{bar.num.h}<small>{bar.num.m}</small></p>}
                     
                 </Holder>)}
             </Quadro>
@@ -196,8 +197,11 @@ height:100%;flex-direction:column-reverse;
 justify-content:flex-start;align-items:center;
 margin-right:8px;
 
-p{font-weight:500;
-font-size:16px;width:100%;text-align:center;
-margin:0;margin-right:1px;
+p{
+margin:0;
+font-weight:600;font-size:17px;
+width:100%;text-align:center;
+margin-left:3px;
+small{font-weight:300;font-size:10px;}
 }
 `
