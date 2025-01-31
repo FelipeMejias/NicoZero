@@ -203,7 +203,6 @@ const Tela=styled.div`
  width:100vh;
 height:100vw; 
 flex-direction:column;
-height:100%;width:;
 background:white;
 justify-content:space-evenly;align-items:center;
 h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
