@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { diferencaDeTempo, englobar, queHorasSao } from "./back/utils"
+import { diferencaDeTempo, makeListWithNext, queHorasSao } from "./back/utils_time"
 import Mostrador from "./Mostrador"
 
 export default function Home({contexto}){
@@ -12,9 +12,8 @@ export default function Home({contexto}){
     const navigate=useNavigate()
     const [h1,setH1]=useState('00:00')
     const [h2,setH2]=useState('00:00')
-    const [infosComAgora,setInfosComAgora]=useState(englobar(dados))
-   
-    function cravar(){
+    const [disparador,setDisparador]=useState(true)
+    function infosComAgora(){
         const novaLista=[...dados]
         const ultimo=dados[dados.length-1]
         const codigo= queHorasSao()
@@ -24,34 +23,37 @@ export default function Home({contexto}){
         }else{
             novaLista.push([codigo])
         }
+        return novaLista
+    }
+    const [variante,setVariante]=useState(infosComAgora())
+    
+    function cravar(){
+        const novaLista=infosComAgora()
         setDados(novaLista)
     }
     function seCravasse(){
+        let ant=dados[dados.length-2]
+        if(ant.length==1)ant=dados[dados.length-3]
         const ultimo=dados[dados.length-1]
-        const ant=dados[dados.length-2]
-        const penAnt=dados[dados.length-3]
+        //if(!diferencaDeTempo(ultimo[0]) && !diferencaDeTempo(ant[0]))return navigate('/edit')
         if(ultimo.length==1){
             setH1(diferencaDeTempo(ultimo[0]))
-            setH2(diferencaDeTempo(ant.length==1?penAnt[1]:ant[1]))
+            setH2(diferencaDeTempo(ant[1]))
         }else{
             setH1(diferencaDeTempo(ultimo[1]))
             setH2(diferencaDeTempo(ultimo[0]))
         }
-        setInfosComAgora(englobar(dados))
     }
-    
-
-    const [intervalo,setIntervalo]=useState(null)
-    useEffect(() => {
-        if (intervalo) {
-            clearInterval(intervalo); // Limpa o intervalo anterior
-        }
-        const minutos=1
-        const novoIntervalo = setInterval(seCravasse, minutos * 60 * 1000); // Cria um novo intervalo
-        setIntervalo(novoIntervalo); // Atualiza o estado com o novo intervalo
+    useEffect(()=>{
         seCravasse()
-        return () => clearInterval(novoIntervalo); // Limpa o intervalo ao desmontar ou atualizar
-    }, [dados]);
+        const novo=infosComAgora()
+        setVariante(novo)
+        console.log(`disparou, variante=>ultimo=> ${novo[novo.length-1]}`)
+    },[disparador])
+    useEffect(()=>{setInterval(() => {
+            setDisparador(!disparador)
+            console.log(`mudei disparador ${queHorasSao()}`)
+        }, 1* 60 * 1000)},[])
     return(
     <Inicial>
         
@@ -63,13 +65,15 @@ export default function Home({contexto}){
             <Pers onClick={()=>{setPag(aoLixo?3:4);navigate('/graphic')}}>
                 <h3>{aoLixo?texto3:texto4}</h3> 
                 <h3><strong>{h1}</strong></h3>
-            <Grafico id='grafico1'  mini={true} cont={cont} dados={infosComAgora} tipo={aoLixo?3:4} >
+            <Grafico id='grafico1'  mini={true}   
+            cont={cont} dados={variante} tipo={aoLixo?3:4} >
             </Grafico>
             </Pers>
             <Pers onClick={()=>{setPag(aoLixo?2:1);navigate('/graphic')}}>
                 <h3>{aoLixo?texto2:texto1}</h3> 
                 <h3><strong>{h2}</strong></h3>
-            <Grafico id='grafico2' mini={true}  cont={cont} dados={infosComAgora} tipo={aoLixo?2:1} >
+            <Grafico id='grafico2' mini={true}  
+            cont={cont} dados={variante} tipo={aoLixo?2:1} >
             </Grafico>
             </Pers>
     </Relogio>
@@ -96,7 +100,8 @@ justify-content:space-between;
 
 `
 const Inicial=styled.div`
-height:calc(100% - 50px);width:100%;padding-top:30px;
+height:100%;width:100%;
+padding-top:30px;
 flex-direction:column;align-items:center;
 `
 

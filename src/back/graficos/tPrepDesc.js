@@ -1,6 +1,7 @@
-import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
+import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils_time";
 
 export function tempoPrepDesc(dados,cont,minimoSono){
+    console.log(dados)
     let last 
     const resp = []
     let diaAseguir=nomeDiaInicio(cont)

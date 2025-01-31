@@ -1,4 +1,4 @@
-import { calcularDiferenca, nomeDiaInicio, proximoDia, transformar } from "../utils";
+import { calcularDiferenca, nomeDiaInicio, proximoDia, transformar } from "../utils_time";
 
 export function intervaloPreparos(dados,cont,minimoSono) {
     let last 

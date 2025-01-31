@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Grafico } from "./Grafico"
-import { info, inicioContagem } from "./back/info"
+import { chaveCont, chaveDados, chavePag, info, inicioContagem, texto1, texto2, texto3, texto4 } from "./back/info"
 import Editar from "./Editar"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PaginaGrafico from "./PaginaGrafico"
@@ -15,35 +15,31 @@ import Odissey from "./portal/Odissey"
 import Nexus from "./portal/Nexus"
 import Portal from "./portal/Portal"
 export function App(){
+    const valorDados=JSON.parse(localStorage.getItem(chaveDados))||info
+    const valorCont=JSON.parse(localStorage.getItem(chaveCont))||inicioContagem
+    const valorPag=JSON.parse(localStorage.getItem(chavePag))||1
 
-    const chaveDados='dados2'
-    const chaveCont='cont1'
+    const [dados,setDados]=useState(valorDados)
+    const [cont,setCont]=useState(valorCont)
+    const [pag,setPag]=useState(valorPag)
 
-    const [pag,setPag]=useState(1)
-    const [dados,setDados]=useState(JSON.parse(localStorage.getItem(chaveDados))||info)
-    const [cont,setCont]=useState(JSON.parse(localStorage.getItem(chaveCont))||inicioContagem)
+    useEffect(()=>{localStorage.setItem(chaveDados, JSON.stringify(dados))},[dados])
+    useEffect(()=>{localStorage.setItem(chaveCont, JSON.stringify(cont))},[cont])
+    useEffect(()=>{localStorage.setItem(chavePag, JSON.stringify(pag))},[pag])
 
-    const texto1='Intervalo Boladas'
-    const texto2='Intervalo Lixos'
-    const texto3='Duração cigarro'
-    const texto4='Duração abstinência'
+    
+    const [dadosProv,setDadosProv]=useState(valorDados)
+    const [contProv,setContProv]=useState(valorCont)
 
-    const [dadosProv,setDadosProv]=useState(JSON.parse(localStorage.getItem(chaveDados))||info)
-    const [contProv,setContProv]=useState(JSON.parse(localStorage.getItem(chaveCont))||inicioContagem)
-
-    useEffect(()=>{
-        localStorage.setItem(chaveDados, JSON.stringify(dados))
-    },[dados])
-    useEffect(()=>{
-        localStorage.setItem(chaveCont, JSON.stringify(cont))
-    },[cont])
-    const contexto={texto1,texto2,texto3,texto4,
+    const contexto={
+        texto1,texto2,texto3,texto4,
         dadosProv,setDadosProv,contProv,setContProv,
         pag,setPag,dados,setDados,cont,setCont}
     return(
         <BrowserRouter>
         <Pagina>
             <Menu />
+            <Cel>
             <Routes>
                 <Route path='/' element={<Home contexto={contexto}/>}/>
                 <Route path='/edit' element={<Editar contexto={contexto}/>}/>
@@ -56,6 +52,7 @@ export function App(){
                 <Route path='/ideias/codeodissey' element={<Odissey/>}/>
                 <Route path='/ideias/codesphere' element={<Portal/>}/>
             </Routes>
+            </Cel>
         </Pagina>
         </BrowserRouter>
     )
@@ -66,7 +63,15 @@ height:100vh;width:100vw;
 background:#67bf67;
 flex-direction:column;
 align-items:center;
-justify-content:flex;start
+justify-content:flex-start
+`
+
+const Cel=styled.div`
+max-width:500px;position:fixed;
+height:calc(100% - 50px);width:100%;top:50px;
+flex-direction:column;
+align-items:center;
+justify-content:space-evenly;
 `
 
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { queHorasSao, transfLinha } from "./back/utils"
+import { queHorasSao, transfLinha } from "./back/utils_convert"
 import Mostrador from "./Mostrador"
 import { useNavigate } from "react-router-dom"
-import { LucideArrowLeft, LucideCheck, LucideCopy, LucideCopyCheck, LucideEraser, LucideSave, LucideUpload } from "lucide-react"
+import { LucideArrowLeft, LucideCheck, LucideCopy, LucideCopyCheck, LucideEraser, LucideHardDriveDownload, LucideSave, LucideUpload } from "lucide-react"
 
 export default function Home({contexto}){
     const {texto1,texto2,texto3,texto4,
@@ -12,16 +12,16 @@ export default function Home({contexto}){
     const navigate=useNavigate()
     
 
-    const [copiado,setCopiado]=useState(false)
+    
     const [texto,setTexto]=useState('')
     function add(){
         const novaLista=[...dadosProv]
         const ultimo=dadosProv[dadosProv.length-1]
         if(ultimo.length==1){
             novaLista.pop()
-            novaLista.push([ultimo[0],texto])
+            novaLista.push([ultimo[0],transfLinha(texto)])
         }else{
-            novaLista.push([texto])
+            novaLista.push([transfLinha(texto)])
         }
         setDadosProv(novaLista)
         setTexto('')
@@ -39,6 +39,7 @@ export default function Home({contexto}){
         setContProv(linhas[0].replace('\r',''))
         for(let linhaCrua of linhas.slice(1)){
             const linha=linhaCrua.replace('\r','')
+            if(!linha)continue
             if(isNaN(parseInt(linha[0]))){
                 final.push(linha)
             }else{
@@ -55,24 +56,10 @@ export default function Home({contexto}){
         console.error('Erro ao acessar a área de transferência', err);
     }
     };
-    function copiarTexto(){
-        let str=``
-        str+=`${cont}\n`
-        for(let linha of dados){
-            if(typeof linha == 'string'){
-                str+=`${linha}\n`
-            }else{
-                str+=`${linha[0]}${linha[1]?`,${linha[1]}`:''}\n`
-            }
-        }
-        navigator.clipboard.writeText(str).then(() => {setCopiado(true);setTimeout(() => setCopiado(false), 2000)}).catch(err => console.error('Erro ao copiar o texto: ', err));
-    }
+    
     function salvar(){
         setDados(dadosProv)
         setCont(contProv)
-        navigate('/history')
-    }
-    function voltar(){
         navigate('/history')
     }
     function remover(){
@@ -91,48 +78,32 @@ export default function Home({contexto}){
     return(
         <Inicial>
             <Cab>
-            <Mudar cor={'#e07421'} onClick={voltar}>
-                <LucideArrowLeft  style={{cursor:'pointer'}} size={25} color={'white'}/>
-                <p>Back</p>
-                </Mudar>
+                {/*<Mudar cor={'#e07421'} onClick={voltar}><LucideArrowLeft  style={{cursor:'pointer'}} size={25} color={'white'}/><p>Back</p></Mudar>*/}
                 <Novo>
-                <input
-                    value={texto}
-                    onChange={(e)=>editarInput(e)}
-                    placeholder={'0000'}
-                />
-                <Mudar onClick={add}>
-                    <LucideCheck  style={{cursor:'pointer'}} size={25} color={'black'}/>
-                    <p>Add</p>
-                </Mudar>
-                <Mudar onClick={remover}>
-                    <LucideEraser  style={{cursor:'pointer'}} size={25} color={'black'}/>
-                    <p>Erase</p>
-                </Mudar>
-                </Novo>
-            </Cab>
-            <Mostrador wi={'calc(100% - 160px)'} hei={'calc(100% - 80px)'} cont={contProv} dados={dadosProv}/>
-            <Cab>
-                
-                <Sep>
-                <Mudar onClick={copiarTexto}>
-                    {copiado?<LucideCopyCheck  style={{cursor:'pointer'}} size={25} color={'black'}/>
-                    :<LucideCopy  style={{cursor:'pointer'}} size={25} color={'black'}/>}
-                    <p>{copiado?'Copiado!':'Copiar'}</p>
+                    <input
+                        value={texto}
+                        onChange={(e)=>editarInput(e)}
+                        placeholder={'0000'}
+                    />
+                    <Mudar onClick={add}>
+                        <LucideCheck  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                        <p>Add</p>
                     </Mudar>
+                    <Mudar onClick={remover}>
+                        <LucideEraser  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                        <p>Erase</p>
+                    </Mudar>
+                </Novo>
                 <Mudar onClick={handleColar}>
-                    <LucideUpload  style={{cursor:'pointer'}} size={25} color={'black'}/>
+                    <LucideHardDriveDownload  style={{cursor:'pointer'}} size={25} color={'black'}/>
                     <p>Paste</p>
                 </Mudar>
-                
-                </Sep>
-                
                 <Mudar cor={'#3a6ac9'} onClick={salvar}>
-                <LucideSave  style={{cursor:'pointer'}} size={25} color={'white'}/>
-                <p>Save</p>
+                    <LucideSave  style={{cursor:'pointer'}} size={25} color={'white'}/>
+                    <p>Save</p>
                 </Mudar>
             </Cab>
-            
+            <Mostrador wi={'calc(100% - 120px)'} hei={'calc(100% - 80px)'} cont={contProv} dados={dadosProv}/>
     </Inicial>
     )
 }
@@ -142,8 +113,9 @@ height:170px;
 align-items:center;
 justify-content:space-between;
 `
-const Inicial=styled.div`max-width:520px;
-height:calc(100% - 50px);width:100%;padding-top:30px;
+const Inicial=styled.div`
+height:100%;width:100%;
+padding-top:30px;
 align-items:flex-start;justify-content:space-evenly;
 input{
 width:50px;height:30px;font-size:18px;

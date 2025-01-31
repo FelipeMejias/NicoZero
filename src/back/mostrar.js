@@ -1,12 +1,12 @@
-import { calcularDiferenca, nomeDiaInicio, proximoDia } from "./utils";
+import { calcularDiferenca, nomeDiaInicio, proximoDia } from "./utils_time";
 
 export function mostrar(dados,cont){
-    console.log(dados)
+    //console.log(dados)
     let diaAseguir=nomeDiaInicio(cont)
     const resp=[]
     let last=Infinity
     for(let lis of dados){
-        console.log(lis)
+        //console.log(lis)
         if(typeof lis == 'string'){
             resp.push(lis)
         }else{

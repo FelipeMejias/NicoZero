@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { queHorasSao } from "./back/utils"
+import { queHorasSao } from "./back/utils_time"
 import { mostrar } from "./back/mostrar"
 import { diasSemana } from "./back/info"
 

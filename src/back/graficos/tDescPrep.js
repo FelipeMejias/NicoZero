@@ -1,4 +1,4 @@
-import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils";
+import { calcularDiferenca, nomeDiaInicio, proximoDia } from "../utils_time";
 
 export function tempoDescPrep(dados,cont,minimoSono){
     let last 

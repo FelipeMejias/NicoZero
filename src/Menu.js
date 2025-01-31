@@ -1,6 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
-import { queHorasSao } from "./back/utils"
+import { queHorasSao } from "./back/utils_time"
 import Mostrador from "./Mostrador"
 import { useLocation, useNavigate } from "react-router-dom"
 import { LucideChartColumnIncreasing, LucideCigarette, LucideListCheck } from "lucide-react"
@@ -30,7 +30,7 @@ export default function Menu(){
 }
 
 const Cab=styled.div`
-max-width:600px;
+max-width:500px;
 width:100%;height:100%;
 align-items:center;
 justify-content:space-evenly;
@@ -46,6 +46,7 @@ margin-left:5px;
 color:${p=>p.sel?'white':'#45e045'};}
 `
 const Tela=styled.div`
+position:fixed;top:0;
 width:100%;height:50px;
 align-items:center;
 justify-content:center;

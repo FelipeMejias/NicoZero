@@ -31,43 +31,22 @@ export function calcularDiferenca(anterior,h){
     return {tam:dif,num}
 }
 export function diferencaDeTempo(horaString) {
-    const agora = dayjs().tz('America/Sao_Paulo'); // Hora atual com fuso horário
-    let horaFornecida = dayjs().tz('America/Sao_Paulo').set('hour', parseInt(horaString.slice(0, 2))).set('minute', parseInt(horaString.slice(2)));
-    if (horaFornecida.isAfter(agora)) {
+    try{
+        const agora = dayjs().tz('America/Sao_Paulo'); // Hora atual com fuso horário
+        let horaFornecida = dayjs().tz('America/Sao_Paulo').set('hour', parseInt(horaString.slice(0, 2))).set('minute', parseInt(horaString.slice(2)));
+        if (horaFornecida.isAfter(agora)) {
         horaFornecida = horaFornecida.subtract(1, 'day');
-    }
-    const diferencaMinutos = agora.diff(horaFornecida, 'minute');
-    const horas = Math.floor(diferencaMinutos / 60);
-    const minutos = diferencaMinutos % 60;
-    return `${String(horas).padStart(1)}:${String(minutos).padStart(2, '0')}`;
-}
-export function transfLinha(str){
-    const tam=str.length
-    if(str.includes(':')){
-        const l=str.split(':')
-        return `${String(l[0]).padStart(2, '0')}${String(l[1]).padStart(2, '0')}`;
-    }else if(tam==4){
-        return str
-    }else if(tam==3){
-        return `0${str}`
-    }else if(tam==2){
-        return `${str}00`
-    }else if(tam==1){
-        return `0${str}00`
-    }
-}
-export function englobar(dados){
-        const novaLista=[...dados]
-        const ultimo=dados[dados.length-1]
-        const codigo= queHorasSao()
-        if(ultimo.length==1){
-            novaLista.pop()
-            novaLista.push([ultimo[0],codigo])
-        }else{
-            novaLista.push([codigo])
         }
-        return novaLista
+        const diferencaMinutos = agora.diff(horaFornecida, 'minute');
+        const horas = Math.floor(diferencaMinutos / 60);
+        const minutos = diferencaMinutos % 60;
+        return `${String(horas).padStart(1)}:${String(minutos).padStart(2, '0')}`;
+    }catch(e){
+        console.log(e)
+        return undefined
     }
+    
+}
 export function transformarEmTempo(numero){
     const horas=Math.floor(numero / 1)
     const fracao=numero % 1
@@ -75,3 +54,4 @@ export function transformarEmTempo(numero){
     const m=minutos.length==1?`0${minutos}`:minutos
     return {h:horas,m}
 }
+

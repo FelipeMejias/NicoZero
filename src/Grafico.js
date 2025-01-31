@@ -5,7 +5,8 @@ import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
 import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck } from "lucide-react";
-export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
+export function Grafico({dados,cont,cravado,id,mini,tipo,nome}){
+    
     const [lista,setLista]=useState([])
     const [alterando,setAlterando]=useState(false)
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
@@ -28,7 +29,7 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
     }
     useEffect(()=>{localStorage.setItem("sono", JSON.stringify(sono))},[sono])
     useEffect(()=>{localStorage.setItem("zoom", JSON.stringify(zoom))},[zoom])
-    useEffect(construirLista,[tipo,zoom,sono])
+    useEffect(construirLista,[tipo,zoom,sono,dados])
     function corBarra(tam,i=-1){
       
         const len=lista.length
@@ -43,7 +44,7 @@ export function Grafico({cravado,id,mini,tipo,nome,dados,cont}){
             let points=3
            
             for(let valor of bases){
-                console.log(valor)
+                //console.log(valor)
                 if(tam > valor)points++
                 if(tam == valor)points+=0.5
                 if(tam < valor)points--

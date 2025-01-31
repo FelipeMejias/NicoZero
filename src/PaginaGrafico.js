@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
-import { queHorasSao } from "./back/utils"
+import { queHorasSao } from "./back/utils_time"
+import { useEffect } from "react"
 
 export default function PaginaGrafico({contexto}){
     const {texto1,texto2,texto3,texto4,
@@ -28,6 +29,9 @@ export default function PaginaGrafico({contexto}){
             return dados
         }
     }
+    useEffect(()=>{setInterval(() => {
+        console.log('PaginaGrafico!')
+        }, 1* 60 * 1000)},[])
     return(
     <Inicial>
         <Outras>
@@ -37,9 +41,10 @@ export default function PaginaGrafico({contexto}){
             <Outra selec={pag==4} onClick={()=>setPag(4)}><p>{texto4}</p></Outra>
         </Outras>
         <Holder>
-            <Grafico id='unico' cont={cont} 
+            <Grafico id='unico' 
+            dados={gerarDados()}
+            cont={cont}
             cravado={cravado}
-            dados={gerarDados()} 
             tipo={pag} nome={
                 pag==1?texto1:
                 pag==2?texto2:
@@ -66,13 +71,13 @@ p{font-size:16px;text-align:center;line-height:16px;
 }
 `
 const Outras=styled.div`
-height:80px;width:100%;
-justify-content:space-evenly;
+height:80px;width:calc(100% - 40px);
+justify-content:space-between;
 align-items:center;
 `
 
 const Inicial=styled.div`
-height:calc(100% - 50px);width:100%;
+height:100%;width:100vw;
 flex-direction:column;align-items:center;
 `
 
