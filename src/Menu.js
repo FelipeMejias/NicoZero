@@ -46,7 +46,6 @@ margin-left:5px;
 color:${p=>p.sel?'white':'#45e045'};}
 `
 const Tela=styled.div`
-position:fixed;top:0;
 width:100%;height:50px;
 align-items:center;
 justify-content:center;

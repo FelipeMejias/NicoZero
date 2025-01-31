@@ -59,6 +59,7 @@ export function App(){
 }
 
 const Pagina=styled.div`
+position:fixed;
 height:100vh;width:100vw;
 background:#67bf67;
 flex-direction:column;
@@ -67,8 +68,8 @@ justify-content:flex-start
 `
 
 const Cel=styled.div`
-max-width:500px;position:fixed;
-height:calc(100% - 50px);width:100%;top:50px;
+max-width:500px;
+height:calc(100% - 50px);width:100%;
 flex-direction:column;
 align-items:center;
 justify-content:space-evenly;
