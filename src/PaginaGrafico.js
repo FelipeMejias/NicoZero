@@ -74,9 +74,8 @@ export default function PaginaGrafico({contexto}){
     )
 }
 const Wraper=styled.div`
-min-height:100vw;min-width:100vh;
-max-height:100vw;max-width:100vh;
-position:absolute;top:0;
+height:100vw;width:calc(100vh - 50px);
+position:absolute;top:30px;
 flex-direction:column;align-items:center;
 overflow-x:auto;
 transform:rotate(90deg);
@@ -103,7 +102,7 @@ align-items:center;
 `
 
 const Inicial=styled.div`
-height:100%;width:100vw;
+height:100%;width:calc(100vh - 80px);
 flex-direction:column;align-items:center;
 `
 

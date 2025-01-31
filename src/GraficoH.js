@@ -200,7 +200,7 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
- width:100vh;
+ width:width:calc(100vh - 50px);
 height:100vw; 
 flex-direction:column;
 background:white;
@@ -209,7 +209,7 @@ h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
 `
 const Quadro=styled.div`
 
-height:calc(100vw - 110px);width:calc(100vh - 40px);
+height:calc(100vw - 110px);width:calc(100vh - 90px);
 border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
