@@ -74,7 +74,7 @@ export default function PaginaGrafico({contexto}){
     )
 }
 const Wraper=styled.div`
-height:100vw;width:100vh;
+height:100vw;width:calc(100% + 100px);
 position:fixed;top:50px;
 flex-direction:column;align-items:center;
 overflow-x:auto;
