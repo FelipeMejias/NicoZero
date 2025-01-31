@@ -5,7 +5,7 @@ import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
 import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck, LucideMaximize2 } from "lucide-react";
-export function Grafico({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,nome}){
+export function GraficoH({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,nome}){
     
     const [lista,setLista]=useState([])
     const [alterando,setAlterando]=useState(false)
@@ -81,7 +81,16 @@ export function Grafico({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,
             return `${tam*zoom*fator}px`
         }
     }
-    
+    useEffect(()=>{
+        const elemento = document.querySelector('.wraper');
+        // Adiciona um evento de scroll
+        elemento.addEventListener('wheel', (event) => {
+        // Previne o comportamento padrão (scroll vertical)
+        event.preventDefault();
+        // Rotaciona o scroll de acordo com o movimento vertical
+        elemento.scrollLeft += event.deltaY;
+        });
+    },[])
     return(mini?
         <Quadrinho id={id}>
                 {lista.map((bar,i)=><Holder wi={'25px'}>
@@ -92,7 +101,7 @@ export function Grafico({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,
                     
                 </Holder>)}
             </Quadrinho>:
-        <Tela orientado={orientado}>
+        <Tela >
             {alterando?
             <Cab style={{maxWidth:'300px'}}>
                 <Conf>
@@ -129,7 +138,7 @@ export function Grafico({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,
             </Cab>
 }
             
-            <Quadro id={id}>
+            <Quadro className="wraper" wraper id={id}>
                 {lista.map((bar,i)=><Holder wi={bar.tam==99?'60px':'25px'}>
                     <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,cravado?i:false)} tam={tamanhoBarra(bar.tam)}>
                         <div>{bar.tex}</div>
@@ -172,6 +181,7 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
+max-width:100vw;max-height:100vh;
  width:100%;
 height:100%; 
 flex-direction:column;

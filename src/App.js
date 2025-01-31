@@ -30,8 +30,8 @@ export function App(){
     
     const [dadosProv,setDadosProv]=useState(valorDados)
     const [contProv,setContProv]=useState(valorCont)
-
-    const contexto={
+    const [orientado,setOrientado]=useState(false)
+    const contexto={orientado,setOrientado,
         texto1,texto2,texto3,texto4,
         dadosProv,setDadosProv,contProv,setContProv,
         pag,setPag,dados,setDados,cont,setCont}

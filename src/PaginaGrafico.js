@@ -3,9 +3,10 @@ import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
 import { queHorasSao } from "./back/utils_time"
 import { useEffect } from "react"
+import { GraficoH } from "./GraficoH"
 
 export default function PaginaGrafico({contexto}){
-    const {texto1,texto2,texto3,texto4,
+    const {texto1,texto2,texto3,texto4,orientado,setOrientado,
         pag,setPag,dados,setDados,cont,setCont}=contexto
     const aoLixo=dados[dados.length-1].length==1
     const temProximo=aoLixo?[2,3]:[1,4]
@@ -32,7 +33,20 @@ export default function PaginaGrafico({contexto}){
     useEffect(()=>{setInterval(() => {
         console.log('PaginaGrafico!')
         }, 1* 60 * 1000)},[])
-    return(
+    return(orientado?<Wraper>
+        <GraficoH id='unico' 
+            dados={gerarDados()}
+            cont={cont}
+            orientado={orientado}
+            setOrientado={setOrientado}
+            cravado={cravado}
+            tipo={pag} nome={
+                pag==1?texto1:
+                pag==2?texto2:
+                pag==3?texto3:
+                pag==4?texto4:'' }>
+            </GraficoH>
+    </Wraper>:
     <Inicial>
         <Outras>
             <Outra selec={pag==1} onClick={()=>setPag(1)}><p>{texto1}</p></Outra>
@@ -44,6 +58,8 @@ export default function PaginaGrafico({contexto}){
             <Grafico id='unico' 
             dados={gerarDados()}
             cont={cont}
+            orientado={orientado}
+            setOrientado={setOrientado}
             cravado={cravado}
             tipo={pag} nome={
                 pag==1?texto1:
@@ -56,6 +72,13 @@ export default function PaginaGrafico({contexto}){
     
     )
 }
+const Wraper=styled.div`
+height:100%;width:100vw;
+flex-direction:column;align-items:center;
+overflow-x:auto;
+transform:rotate(90deg);
+transform-origin:center center;
+`
 const Outra=styled.div`
 height:55%;
 min-width:calc(25% - 15px);
