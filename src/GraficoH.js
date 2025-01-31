@@ -4,9 +4,10 @@ import { intervaloPreparos } from "./back/graficos/intervPrep"
 import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
-import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck, LucideMaximize2 } from "lucide-react";
-export function GraficoH({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,nome}){
-    
+import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck, LucideMaximize2, LucideMinimize2 } from "lucide-react";
+export default function GraficoH({contexto,dados,cont,cravado,id,mini,tipo,nome}){
+    const {texto1,texto2,texto3,texto4,orientado,setOrientado,
+        pag,setPag,setDados,setCont}=contexto
     const [lista,setLista]=useState([])
     const [alterando,setAlterando]=useState(false)
     const [sono,setSono]=useState(JSON.parse(localStorage.getItem("sono"))||7)
@@ -124,7 +125,7 @@ export function GraficoH({orientado,setOrientado,dados,cont,cravado,id,mini,tipo
                             -
                         </Action>
                         <p>{zoom}</p>
-                        <Action onClick={()=>{if(zoom<10)setZoom(zoom+1)}}>
+                        <Action onClick={()=>{if(zoom<12)setZoom(zoom+1)}}>
                             +
                         </Action>
                     </Control>
@@ -132,9 +133,17 @@ export function GraficoH({orientado,setOrientado,dados,cont,cravado,id,mini,tipo
             </Cab>
         :
             <Cab>
-            <LucideMaximize2 onClick={()=>setOrientado(!orientado)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
-                <h1>{nome}</h1>
-                <LucideSettings2 onClick={()=>setAlterando(true)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
+                <Outras wi={'250px'}>
+                    <LucideMinimize2 onClick={()=>setOrientado(!orientado)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
+                    <h1>{nome}</h1>
+                    <LucideSettings2 onClick={()=>setAlterando(true)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
+                </Outras>
+                <Outras wi={'calc(100% - 280px)'}>
+                    <Outra selec={pag==1} onClick={()=>setPag(1)}><p>{texto1}</p></Outra>
+                    <Outra selec={pag==2} onClick={()=>setPag(2)}><p>{texto2}</p></Outra>
+                    <Outra selec={pag==3} onClick={()=>setPag(3)}><p>{texto3}</p></Outra>
+                    <Outra selec={pag==4} onClick={()=>setPag(4)}><p>{texto4}</p></Outra>
+                </Outras>
             </Cab>
 }
             
@@ -151,6 +160,25 @@ export function GraficoH({orientado,setOrientado,dados,cont,cravado,id,mini,tipo
         </Tela>
     )
 }
+const Outra=styled.div`
+height:55%;
+min-width:calc(25% - 15px);
+max-width:calc(25% - 15px);
+background:white;border-radius:10px;
+opacity:${p=>p.selec?'30%':'100%'};
+cursor:pointer;
+justify-content:center;align-items:center;
+p{font-size:14px;text-align:center;line-height:16px;
+ word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: normal; 
+}
+`
+const Outras=styled.div`
+height:80px;width:${p=>p.wi};
+justify-content:space-between;
+align-items:center;
+`
 const Quadrinho=styled.div`
 height:calc(100% - 20px);width:100%;
 background:white;
@@ -188,7 +216,6 @@ height:100%;width:;
 background:white;
 justify-content:space-evenly;align-items:center;
 h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
-border-radius:20px;
 `
 const Quadro=styled.div`
 height:calc(100% - 110px);width:calc(100% - 40px);

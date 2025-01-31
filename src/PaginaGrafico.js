@@ -3,7 +3,7 @@ import { Grafico } from "./Grafico"
 import { useNavigate } from "react-router-dom"
 import { queHorasSao } from "./back/utils_time"
 import { useEffect } from "react"
-import { GraficoH } from "./GraficoH"
+import  GraficoH from "./GraficoH"
 
 export default function PaginaGrafico({contexto}){
     const {texto1,texto2,texto3,texto4,orientado,setOrientado,
@@ -37,6 +37,7 @@ export default function PaginaGrafico({contexto}){
         <GraficoH id='unico' 
             dados={gerarDados()}
             cont={cont}
+            contexto={contexto}
             orientado={orientado}
             setOrientado={setOrientado}
             cravado={cravado}
@@ -74,6 +75,7 @@ export default function PaginaGrafico({contexto}){
 }
 const Wraper=styled.div`
 height:100vw;width:100vh;
+position:fixed;top:50px;
 flex-direction:column;align-items:center;
 overflow-x:auto;
 transform:rotate(90deg);
