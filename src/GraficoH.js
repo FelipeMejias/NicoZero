@@ -159,7 +159,7 @@ background:white;border-radius:10px;
 opacity:${p=>p.selec?'30%':'100%'};
 cursor:pointer;
 justify-content:center;align-items:center;
-p{font-size:14px;text-align:center;line-height:16px;
+p{font-size:13px;text-align:center;line-height:16px;
  word-wrap: break-word; 
   overflow-wrap: break-word; 
   white-space: normal; 
@@ -205,7 +205,7 @@ height:100vw;
 flex-direction:column;
 background:white;
 justify-content:space-evenly;align-items:center;
-h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
+h1{margin:0;font-size:18px;font-weight:600;text-align:center;}
 `
 const Quadro=styled.div`
 
