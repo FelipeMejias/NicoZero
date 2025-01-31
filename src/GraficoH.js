@@ -92,16 +92,7 @@ export default function GraficoH({contexto,dados,cont,cravado,id,mini,tipo,nome}
         elemento.scrollLeft += event.deltaY;
         });
     },[])
-    return(mini?
-        <Quadrinho id={id}>
-                {lista.map((bar,i)=><Holder wi={'25px'}>
-                    <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,i)} tam={tamanhoBarra(bar.tam,4)}>
-                        <div>{bar.tex}</div>
-                    </Barrinha>
-                    {bar.tam>sono?<></>:<p>{bar.num.h}<small>{bar.num.m}</small></p>}
-                    
-                </Holder>)}
-            </Quadrinho>:
+    return(
         <Tela >
             {alterando?
             <Cab style={{maxWidth:'300px'}}>
@@ -209,8 +200,8 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
- width:100%;
-height:100%; 
+ width:100vh;
+height:100vw; 
 flex-direction:column;
 height:100%;width:;
 background:white;
@@ -218,7 +209,8 @@ justify-content:space-evenly;align-items:center;
 h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
 `
 const Quadro=styled.div`
-height:calc(100% - 110px);width:calc(100% - 40px);
+
+height:calc(100vw - 110px);width:calc(100vh - 40px);
 border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
