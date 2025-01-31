@@ -181,7 +181,6 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
-max-width:100vw;max-height:100vh;
  width:100%;
 height:100%; 
 flex-direction:column;
