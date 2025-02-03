@@ -182,7 +182,7 @@ h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
 border-radius:20px;
 `
 const Quadro=styled.div`
-height:calc(100% - 110px);width:calc(100% - 40px);
+height:calc(100% - 110px);width:calc(100% - 20px);
 border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `

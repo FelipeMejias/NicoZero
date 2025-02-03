@@ -200,7 +200,7 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
- width:width:calc(100vh - 50px);
+width:calc(100vh - 50px);
 height:100vw; 
 flex-direction:column;
 background:white;

@@ -77,7 +77,7 @@ const Wraper=styled.div`
 height:100vw;width:calc(100vh - 50px);
 position:absolute;top:center;left:center;
 flex-direction:column;align-items:center;
-overflow-x:auto;
+overflow-x:auto;margin-bottom:100px;
 transform:rotate(90deg);
 transform-origin:center center;
 `
@@ -102,10 +102,11 @@ align-items:center;
 `
 
 const Inicial=styled.div`
-height:calc(100% - 50px);width:calc(100vw - 80px);max-width:100%;
-flex-direction:column;align-items:center;position:absolute;
+height:calc(100% - 0px);width:calc(100vw - 20px);
+max-width:800px;
+flex-direction:column;align-items:center;
 `
 
 const Holder=styled.div`
-width:calc(100% - 40px);height:calc(100% - 150px)
+width:100%;height:calc(100% - 150px)
 `
