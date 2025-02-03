@@ -9,6 +9,9 @@ dayjs.locale('pt-br')
 export function queHorasSao(){
     return dayjs().tz('America/Sao_Paulo').format('HHmm') 
 }
+export function queDiaEh(){
+    return dayjs().tz('America/Sao_Paulo').format('YYYY-MM-DD') 
+}
 export function nomeDiaInicio(cont) {
     const dia = dayjs(cont).tz('America/Sao_Paulo').format('dddd').replace('-feira','')
     return dia[0].toUpperCase()+dia.slice(1)
@@ -21,6 +24,7 @@ export function proximoDia(diaAtual) {
 }
 
 export function calcularDiferenca(a,h){
+
     let time1 = dayjs(`2025-01-01 ${a}`, 'YYYY-MM-DD HHmm')
     let time2 = dayjs(`2025-01-01 ${h}`, 'YYYY-MM-DD HHmm')
     if (time2.isBefore(time1)) {
@@ -28,7 +32,7 @@ export function calcularDiferenca(a,h){
     }
     const dif = time2.diff(time1, 'hour', true)
     const num=transformarEmTempo(dif)
-    return {tam:dif,num,texto:`${a.slice(0,2)}:${a.slice(2,4)} até ${h.slice(0,2)}:${h.slice(2,4)}`}
+    return {tam:dif,num,texto:`${a?.slice(0,2)}:${a?.slice(2,4)} até ${h?.slice(0,2)}:${h?.slice(2,4)}`}
 }
 export function diferencaDeTempo(horaString) {
     try{

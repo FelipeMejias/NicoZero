@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Grafico } from "./Grafico"
-import { chaveCont, chaveDados, chavePag, info, inicioContagem, texto1, texto2, texto3, texto4 } from "./back/info"
+import { chaveCont, chaveDados, chavePag, info, texto1, texto2, texto3, texto4 } from "./back/info"
 import Editar from "./Editar"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PaginaGrafico from "./PaginaGrafico"
@@ -14,16 +14,18 @@ import Sphere from "./portal/Sphere"
 import Odissey from "./portal/Odissey"
 import Nexus from "./portal/Nexus"
 import Portal from "./portal/Portal"
+import { queDiaEh } from "./back/utils_time"
 export function App(){
     const valorDados=JSON.parse(localStorage.getItem(chaveDados))||info
-    const valorCont=JSON.parse(localStorage.getItem(chaveCont))||inicioContagem
+    const valorCont=JSON.parse(localStorage.getItem(chaveCont))||queDiaEh()
     const valorPag=JSON.parse(localStorage.getItem(chavePag))||1
 
     const [dados,setDados]=useState(valorDados)
     const [cont,setCont]=useState(valorCont)
     const [pag,setPag]=useState(valorPag)
 
-    useEffect(()=>{localStorage.setItem(chaveDados, JSON.stringify(dados))},[dados])
+    useEffect(()=>{console.log(dados)
+        localStorage.setItem(chaveDados, JSON.stringify(dados))},[dados])
     useEffect(()=>{localStorage.setItem(chaveCont, JSON.stringify(cont))},[cont])
     useEffect(()=>{localStorage.setItem(chavePag, JSON.stringify(pag))},[pag])
 
