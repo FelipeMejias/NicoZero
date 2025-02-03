@@ -5,7 +5,7 @@ import { intervaloDescartes } from "./back/graficos/intervDesc"
 import { tempoPrepDesc } from "./back/graficos/tPrepDesc"
 import { tempoDescPrep } from "./back/graficos/tDescPrep"
 import { Smile, Home, LucideSettings, LucideSettings2, Pointer, LucideSave, LucideCheck, LucideCheckCircle, LucideCheckCircle2, LucideMonitorCheck, LucideMaximize2, LucideMinimize2 } from "lucide-react";
-export default function GraficoH({contexto,dados,cont,cravado,id,mini,tipo,nome}){
+export default function GraficoHPc({contexto,dados,cont,cravado,id,mini,tipo,nome}){
     const {texto1,texto2,texto3,texto4,orientado,setOrientado,
         pag,setPag,setDados,setCont}=contexto
     const [lista,setLista]=useState([])
@@ -124,12 +124,12 @@ export default function GraficoH({contexto,dados,cont,cravado,id,mini,tipo,nome}
             </Cab>
         :
             <Cab>
-                <Outras wi={'250px'}>
+                <Outras wi={'350px'}>
                     <LucideMinimize2 onClick={()=>setOrientado(!orientado)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
                     <h1>{nome}</h1>
                     <LucideSettings2 onClick={()=>setAlterando(true)} style={{cursor:'pointer'}} size={24} color="#9b9b9b" />
                 </Outras>
-                <Outras wi={'calc(100% - 280px)'}>
+                <Outras wi={'calc(100% - 380px)'}>
                     <Outra selec={pag==1} onClick={()=>setPag(1)}><p>{texto1}</p></Outra>
                     <Outra selec={pag==2} onClick={()=>setPag(2)}><p>{texto2}</p></Outra>
                     <Outra selec={pag==3} onClick={()=>setPag(3)}><p>{texto3}</p></Outra>
@@ -200,8 +200,8 @@ font-size:22px;color:#848484;
 background:#e0e0e0;
 `
 const Tela=styled.div`
-width:calc(100vh - 50px);
-height:100vw; 
+width:100%;
+height:100%; 
 flex-direction:column;
 background:white;
 justify-content:space-evenly;align-items:center;
@@ -209,7 +209,7 @@ h1{margin:0;font-size:18px;font-weight:600;text-align:center;}
 `
 const Quadro=styled.div`
 
-height:calc(100vw - 70px);width:calc(100vh - 90px);
+height:calc(100% - 70px);width:calc(100% - 20px);
 border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `

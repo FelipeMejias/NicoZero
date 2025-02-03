@@ -16,8 +16,8 @@ export function intervaloDescartes(dados,cont,minimoSono){
                         dia=diaAseguir
                         diaAseguir=proximoDia(diaAseguir)
                     }
-                    const {tam,num}=calcularDiferenca(last,f)
-                    resp.push({tam,num,tex:dia?.toUpperCase()?.slice(0,3)})
+                    const obj=calcularDiferenca(last,f)
+                    resp.push({...obj,tex:dia?.toUpperCase()?.slice(0,3)})
                 }
                 last=f
             }

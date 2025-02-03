@@ -133,6 +133,7 @@ export function Grafico({orientado,setOrientado,dados,cont,cravado,id,mini,tipo,
                 {lista.map((bar,i)=><Holder wi={bar.tam==99?'60px':'25px'}>
                     <Barrinha roxa={bar.tam==99} cor={corBarra(bar.tam,cravado?i:false)} tam={tamanhoBarra(bar.tam)}>
                         <div>{bar.tex}</div>
+                        <aside>{bar.texto}</aside>
                     </Barrinha>
                     {bar.tam>sono?<></>:<p>{bar.num.h}<small>{bar.num.m}</small></p>}
                     
@@ -149,7 +150,7 @@ border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
 const Cab=styled.div`
-width:calc(100% - 40px);height:50px;align-items:center;
+width:calc(100% - 40px);height:40px;align-items:center;
 justify-content:space-between;padding
 `
 const Conf=styled.div`
@@ -182,11 +183,11 @@ h1{margin:0;font-size:20px;font-weight:600;text-align:center;}
 border-radius:20px;
 `
 const Quadro=styled.div`
-height:calc(100% - 110px);width:calc(100% - 20px);
+height:calc(100% - 70px);width:calc(100% - 20px);
 border:1px solid black;padding-left:10px;
 overflow:auto;border-radius:7px;
 `
-const Barrinha=styled.div`
+const Barrinha=styled.div`position:relative;cursor:pointer;
 height:${p=>p.tam};width:100%;max-height:100%;
 background:${p=>p.cor};
 border-top-right-radius:5px;
@@ -196,7 +197,32 @@ justify-content:${p=>p.roxa?'center':'flex-end'};align-items:center;
 color:${p=>p.roxa?'black':'white'};
 font-size:${p=>p.roxa?15:10}px;
 font-weight:${p=>p.roxa?300:500};
+aside{display:none;
+color:black;font-size:14px;font-weight:400;
+position:absolute;top:10px;background:purple;padding:4px;
+white-space: nowrap;z-index:30;
+position: absolute;top:20px;
+  background: #c4c4c4;
+  padding: 10px 15px;
+  border-radius: 8px;
+  max-width: 200px;
+  text-align: center;
+  &:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #c4c4c4;
+  }
+};
+&:hover {
+aside{display:flex;}
+}
 `
+
 const Holder=styled.div`
 min-width:${p=>p.wi};
 height:100%;flex-direction:column-reverse;

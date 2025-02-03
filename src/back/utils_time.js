@@ -20,15 +20,15 @@ export function proximoDia(diaAtual) {
     return diasSemana[indexProximo]
 }
 
-export function calcularDiferenca(anterior,h){
-    let time1 = dayjs(`2025-01-01 ${anterior}`, 'YYYY-MM-DD HHmm')
+export function calcularDiferenca(a,h){
+    let time1 = dayjs(`2025-01-01 ${a}`, 'YYYY-MM-DD HHmm')
     let time2 = dayjs(`2025-01-01 ${h}`, 'YYYY-MM-DD HHmm')
     if (time2.isBefore(time1)) {
         time2 = time2.add(1, 'day')
     }
     const dif = time2.diff(time1, 'hour', true)
     const num=transformarEmTempo(dif)
-    return {tam:dif,num}
+    return {tam:dif,num,texto:`${a.slice(0,2)}:${a.slice(2,4)} até ${h.slice(0,2)}:${h.slice(2,4)}`}
 }
 export function diferencaDeTempo(horaString) {
     try{
